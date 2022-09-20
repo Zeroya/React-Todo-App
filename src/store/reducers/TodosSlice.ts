@@ -25,7 +25,7 @@ export const counterSlice = createSlice({
         message: action.payload,
         completed: false,
         data: new Date().toLocaleDateString().split(".").join(".") + ' ' + new Date().toLocaleTimeString().slice(0, -3),
-        dataExpiration:new Date().toLocaleDateString().split(".").join(".") + ' ' + new Date().toLocaleTimeString().slice(0, -3),
+        dataExpiration:new Date().toLocaleDateString().split(".").map((el,i) => i == 0 ? Number(el)+1: el).join(".") + ' ' + new Date().toLocaleTimeString().slice(0, -3),
       })
     },
   },

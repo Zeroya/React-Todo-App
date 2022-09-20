@@ -5,8 +5,6 @@ import { addTodo } from '../../store/reducers/TodosSlice';
 const TodoHeader: React.FC = () => {
 
   const dispatch = useAppDispatch();
-  const chatUsers = useAppSelector(state => state.todos);
-  console.log(chatUsers);
   const [input, setInput] = useState('');
 
   const submitValue = (e: React.FormEvent<HTMLFormElement>) => {
