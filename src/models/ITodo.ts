@@ -5,3 +5,9 @@ export interface ITodo {
   dataExpiration:string;
   completed: boolean;
 }
+
+export interface UserData {
+  message:string;
+  data:string;
+  expData:string;
+}
