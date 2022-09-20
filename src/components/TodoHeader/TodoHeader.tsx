@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { addTodo } from '../../store/reducers/TodosSlice';
+import ModalWindow from '../ModalWindow/ModalWindow';
 
 const TodoHeader: React.FC = () => {
 
@@ -20,7 +21,8 @@ const TodoHeader: React.FC = () => {
   return (
     <div>
       <form onSubmit={submitValue}>
-      <input value={input} onChange={handleChange} type="text" />
+      <input value={input} onChange={handleChange} type="text" pattern="^[A-Za-zА-Яа-яЁё0-9\s]+$" />
+      <ModalWindow />
       </form>
     </div>
   )
