@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useAppDispatch } from '../../hooks/hooks';
 import { addTodo } from '../../store/reducers/TodosSlice';
+import s from "./ModalWindow.module.scss";
 
 const ModalWindow: React.FC = () => {
 
@@ -29,7 +30,7 @@ const ModalWindow: React.FC = () => {
   return (
     <>
       <Form >
-        <span onClick={handleShow}><i className="fa fa-plus" aria-hidden="true"></i></span>
+        <span onClick={handleShow}><i className={`fa fa-plus ${s.plusSimbol}` } aria-hidden="true" ></i></span>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Todo input</Modal.Title>

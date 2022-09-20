@@ -8,7 +8,6 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <p>TS Template</p>
       <TodoHeader />
       <TodoList />
     </div>
