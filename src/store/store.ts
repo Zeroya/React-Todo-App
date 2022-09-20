@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import userReducer from './reducers/UserSlice'
+import todosReducer from './reducers/TodosSlice'
 // ...
 
 const rootReducer = combineReducers({
-  value : userReducer
+  todos : todosReducer
 })
 
 
