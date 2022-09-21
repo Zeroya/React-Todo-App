@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import React, { useState } from 'react';
+import { useAppDispatch } from '../../hooks/hooks';
 import { addTodo } from '../../store/reducers/TodosSlice';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -35,4 +35,4 @@ const TodoHeader: React.FC = () => {
   )
 }
 
-export default TodoHeader
+export default TodoHeader;

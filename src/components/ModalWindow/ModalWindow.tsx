@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -7,12 +7,6 @@ import { addModalTodo } from '../../store/reducers/TodosSlice';
 import s from "./ModalWindow.module.scss";
 
 const ModalWindow: React.FC = () => {
-
-  type UserData = {
-    message?: string,
-    data?: string,
-    expData?: string
-  }
 
   const [input, setInput] = useState<any>({});
   const [show, setShow] = useState(false);
@@ -42,7 +36,7 @@ const ModalWindow: React.FC = () => {
   const handleChangeExpData = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInput({ ...input, expData: e.target.value });
   }
-  console.log(input);
+
   return (
     <>
       <Form >
@@ -53,8 +47,8 @@ const ModalWindow: React.FC = () => {
           </Modal.Header>
           <Modal.Body>
             <input type="text" value={input.message} required onChange={handleChangeMessage} placeholder="message" pattern="^[A-Za-zА-Яа-яЁё0-9\s]+$" />
-            <div style={{ margin: '0.5em 0 0.5em' }}><input type="datetime-local" required placeholder="start data"  onChange={handleChangeData} /></div>
-            <input type="datetime-local"  placeholder="expiration data" required  onChange={handleChangeExpData} />
+            <div style={{ margin: '0.5em 0 0.5em' }}><input type="datetime-local" required placeholder="start data" onChange={handleChangeData} /></div>
+            <input type="datetime-local" placeholder="expiration data" required onChange={handleChangeExpData} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={handleClose}>
@@ -69,6 +63,5 @@ const ModalWindow: React.FC = () => {
     </>
   );
 }
-
 
 export default ModalWindow;

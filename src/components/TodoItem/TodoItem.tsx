@@ -1,5 +1,5 @@
-import React from 'react'
-import { ITodo } from '../../models/ITodo'
+import React from 'react';
+import { ITodo } from '../../models/ITodo';
 import s from "./TodoItem.module.scss";
 
 const TodoItem: React.FC<{ todo: ITodo }> = (props) => {
@@ -20,4 +20,4 @@ const TodoItem: React.FC<{ todo: ITodo }> = (props) => {
   )
 }
 
-export default TodoItem
+export default TodoItem;

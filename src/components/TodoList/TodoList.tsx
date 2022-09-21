@@ -1,5 +1,5 @@
-import React from 'react'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import React from 'react';
+import { useAppSelector } from '../../hooks/hooks';
 import { ITodo } from '../../models/ITodo';
 import TodoItem from '../TodoItem/TodoItem';
 import s from "./TodoList.module.scss";
@@ -7,8 +7,6 @@ import s from "./TodoList.module.scss";
 const TodoList: React.FC = () => {
 
   const todos = useAppSelector(state => state.todos.todos);
-
-  console.log(todos);
 
   return (
     <div className={s.todoList}>
@@ -28,4 +26,4 @@ const TodoList: React.FC = () => {
   )
 }
 
-export default TodoList
+export default TodoList;
