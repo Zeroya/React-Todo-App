@@ -1,16 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
-import { ITodo, UserData } from '../../models/ITodo'
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { ITodo, UserData } from '../../models/ITodo';
 import { v4 as uuidv4 } from 'uuid';
-console.log(uuidv4());
+
 interface CounterState {
   todos: ITodo[]
 }
 
-
 const initialState: CounterState = {
-  // @ts-ignore
   todos: [],
 }
 
@@ -40,6 +37,5 @@ export const counterSlice = createSlice({
   },
 })
 
-export const { addTodo, addModalTodo } = counterSlice.actions
-
-export default counterSlice.reducer
+export const { addTodo, addModalTodo } = counterSlice.actions;
+export default counterSlice.reducer;
