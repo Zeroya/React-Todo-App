@@ -1,28 +1,44 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../store';
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { ITodo, UserDate } from "../../models/ITodo";
+import { getCreationInputDate, getCreationInputDateExpiration, getCreationModalDate } from "../../utils/CreateDate";
+import { v4 as uuidv4 } from "uuid";
 
 
 interface CounterState {
-  value: number
+  todos: ITodo[];
 }
-
 
 const initialState: CounterState = {
-  value:0,
-}
+  todos: [],
+};
 
 export const counterSlice = createSlice({
-  name: 'counter',
+  name: "todos",
 
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1
+    addTodo: (state, action: PayloadAction<string>) => {
+      state.todos.push({
+        id: uuidv4(),
+        message: action.payload,
+        completed: false,
+        date: getCreationInputDate(),
+        dateExpiration: getCreationInputDateExpiration(),
+      });
+    },
+    addModalTodo: (state, action: PayloadAction<UserDate>) => {
+      state.todos.push({
+        id: uuidv4(),
+        message: action.payload.message,
+        completed: false,
+        date: getCreationModalDate(action.payload.date),
+        dateExpiration: getCreationModalDate(action.payload.expDate),
+      });
     },
   },
-})
+});
 
-export const { increment } = counterSlice.actions
 
-export default counterSlice.reducer
+export const { addTodo, addModalTodo } = counterSlice.actions;
+export default counterSlice.reducer;

@@ -1,0 +1,30 @@
+.todoList {
+  margin-top: 2%;
+  background: rgba(192, 139, 139, 0.756);
+  box-shadow: 2px 4px 6px rgb(189, 2, 2);
+  height: 50%;
+  width: 35rem;
+  overflow-y: hidden;
+
+&_scrollBox {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  height: 100%;
+  
+}
+
+  h1 {
+    background: rgba(175, 26, 26, 0.918);
+    margin: 0;
+    color: white;
+    padding-bottom: 0.5rem;
+    box-shadow: 2px 4px 6px rgb(88, 8, 8);
+    text-shadow: 2px 4px 6px rgb(88, 8, 8);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+  }
+}

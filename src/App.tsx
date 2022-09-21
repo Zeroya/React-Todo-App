@@ -1,19 +1,15 @@
-import React from 'react';
-import { useAppDispatch, useAppSelector } from './hooks/hooks';
-import { increment } from './store/reducers/UserSlice';
-import './App.css';
+import React from "react";
+import TodoHeader from "./components/TodoHeader/TodoHeader";
+import TodoList from "./components/TodoList/TodoList";
+import "./App.css";
 
 const App: React.FC = () => {
-
-  const value = useAppSelector(state => state.value.value);
-  const dispatch = useAppDispatch();
-
   return (
     <div className="App">
-      <p>TS Template</p>
-      <div><button onClick={() => dispatch(increment())}>+1 к счастью</button><p>{value}</p></div>
+      <TodoHeader />
+      <TodoList />
     </div>
   );
-}
+};
 
 export default App;

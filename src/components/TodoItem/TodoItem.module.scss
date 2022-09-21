@@ -1,0 +1,33 @@
+.todoItem {
+  display: flex;
+
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid rgb(189, 2, 2);
+  color: white;
+
+  p {
+    font-size: 14px;
+    margin: 0;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+
+  &_message {
+    width: 5em;
+    word-wrap: break-word;
+  }
+
+  &_expData {
+
+
+    p {
+      padding: 0 !important;
+      color: rgb(238, 28, 28);
+    }
+
+    p:first-child {
+      font-size: 13px;
+    }
+  }
+}
