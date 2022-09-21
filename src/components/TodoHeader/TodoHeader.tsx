@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addTodo } from '../../store/reducers/TodosSlice';
+import { addTodo } from '../../store/reducers/UserSlice';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import InputGroup from 'react-bootstrap/InputGroup';
 import s from "./TodoHeader.module.scss";

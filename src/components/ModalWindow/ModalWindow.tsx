@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addModalTodo } from '../../store/reducers/TodosSlice';
+import { addModalTodo } from '../../store/reducers/UserSlice';
 import s from "./ModalWindow.module.scss";
 
 const ModalWindow: React.FC = () => {
