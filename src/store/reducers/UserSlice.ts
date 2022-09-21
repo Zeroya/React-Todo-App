@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { ITodo, UserData } from '../../models/ITodo';
 import { v4 as uuidv4 } from 'uuid';
 
+
 interface CounterState {
   todos: ITodo[]
 }
@@ -36,6 +37,7 @@ export const counterSlice = createSlice({
     },
   },
 })
+
 
 export const { addTodo, addModalTodo } = counterSlice.actions;
 export default counterSlice.reducer;
