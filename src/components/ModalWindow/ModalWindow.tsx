@@ -53,8 +53,8 @@ const ModalWindow: React.FC = () => {
           </Modal.Header>
           <Modal.Body>
             <input type="text" value={input.message} required onChange={handleChangeMessage} placeholder="message" pattern="^[A-Za-zА-Яа-яЁё0-9\s]+$" />
-            <div style={{ margin: '0.5em 0 0.5em' }}><input type="tel" pattern="[0-9]+" required placeholder="start data" value={input.data} onChange={handleChangeData} /></div>
-            <input type="tel" pattern="[0-9]+" placeholder="expiration data" required value={input.expData} onChange={handleChangeExpData} />
+            <div style={{ margin: '0.5em 0 0.5em' }}><input type="datetime-local" required placeholder="start data"  onChange={handleChangeData} /></div>
+            <input type="datetime-local"  placeholder="expiration data" required  onChange={handleChangeExpData} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={handleClose}>

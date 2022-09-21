@@ -33,8 +33,8 @@ export const counterSlice = createSlice({
         id: uuidv4(),
         message: action.payload.message,
         completed: false,
-        data: action.payload.data,
-        dataExpiration:action.payload.expData,
+        data: action.payload.data.split("").map(el => el == "T" ? " " : el == "-" ? "." : el).join("").slice(0,10).split(".").reverse().join('.').concat(" ").concat(action.payload.data.slice(11,16)),
+        dataExpiration:action.payload.expData.split("").map(el => el == "T" ? " " : el == "-" ? "." : el).join("").slice(0,10).split(".").reverse().join('.').concat(" ").concat(action.payload.expData.slice(11,16)),
       })
     },
   },
