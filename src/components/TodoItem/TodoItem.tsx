@@ -12,7 +12,7 @@ const TodoItem: React.FC<ITodo> = ({ id, message, date, dateExpiration, complete
   };
 
   return (
-    <li className={s.todoItem}>
+    <li className={`${s.todoItem} ${completed ? s.todoItem_checked : ""}`}>
       <input
         className="form-check-input dark"
         type="checkbox"
@@ -23,8 +23,11 @@ const TodoItem: React.FC<ITodo> = ({ id, message, date, dateExpiration, complete
       <div className={s.todoItem_message}>
         <p className={`${completed ? s.completed : ""}`}>{message}</p>
       </div>
-      <p>{date}</p>
-      <div className={s.todoItem_expData}>
+      <div className={`${s.todoItem_expData} ${completed ? s.completed : ""}`}>
+        <p>Creation date</p>
+        <p>{date}</p>
+      </div>
+      <div className={`${s.todoItem_expData} ${completed ? s.completed : ""}`}>
         <p>Expiration data</p>
         <p>{dateExpiration}</p>
       </div>
