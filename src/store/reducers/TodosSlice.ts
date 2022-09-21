@@ -22,7 +22,7 @@ export const counterSlice = createSlice({
         message: action.payload,
         completed: false,
         data: new Date().toLocaleDateString().split(".").join(".") + ' ' + new Date().toLocaleTimeString().slice(0, -3),
-        dataExpiration:new Date().toLocaleDateString().split(".").map((el,i) => i == 0 ? Number(el)+1: el).join(".") + ' ' + new Date().toLocaleTimeString().slice(0, -3),
+        dataExpiration:new Date().toLocaleDateString().split(".").map((el,i) => i === 0 ? Number(el)+1: el).join(".") + ' ' + new Date().toLocaleTimeString().slice(0, -3),
       })
     },
     addModalTodo: (state, action: PayloadAction<UserData>) => {
@@ -30,8 +30,8 @@ export const counterSlice = createSlice({
         id: uuidv4(),
         message: action.payload.message,
         completed: false,
-        data: action.payload.data.split("").map(el => el == "T" ? " " : el == "-" ? "." : el).join("").slice(0,10).split(".").reverse().join('.').concat(" ").concat(action.payload.data.slice(11,16)),
-        dataExpiration:action.payload.expData.split("").map(el => el == "T" ? " " : el == "-" ? "." : el).join("").slice(0,10).split(".").reverse().join('.').concat(" ").concat(action.payload.expData.slice(11,16)),
+        data: action.payload.data.split("").map(el => el === "T" ? " " : el === "-" ? "." : el).join("").slice(0,10).split(".").reverse().join('.').concat(" ").concat(action.payload.data.slice(11,16)),
+        dataExpiration:action.payload.expData.split("").map(el => el === "T" ? " " : el === "-" ? "." : el).join("").slice(0,10).split(".").reverse().join('.').concat(" ").concat(action.payload.expData.slice(11,16)),
       })
     },
   },
