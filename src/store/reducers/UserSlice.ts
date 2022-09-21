@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../store';
 
 
 interface CounterState {
@@ -9,7 +9,6 @@ interface CounterState {
 
 
 const initialState: CounterState = {
-  // @ts-ignore
   value:0,
 }
 
