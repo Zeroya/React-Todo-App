@@ -1,13 +1,13 @@
 export interface ITodo {
-  id:string;
+  id: string;
   message: string;
-  data:string;
-  dataExpiration:string;
+  date: string;
+  dateExpiration: string;
   completed: boolean;
 }
 
-export interface UserData {
-  message:string;
-  data:string;
-  expData:string;
+export interface UserDate {
+  message: string;
+  date: string;
+  expDate: string;
 }

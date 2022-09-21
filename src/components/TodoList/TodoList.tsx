@@ -1,12 +1,11 @@
-import React from 'react';
-import { useAppSelector } from '../../hooks/hooks';
-import { ITodo } from '../../models/ITodo';
-import TodoItem from '../TodoItem/TodoItem';
+import React from "react";
+import { useAppSelector } from "../../hooks/hooks";
+import { ITodo } from "../../models/ITodo";
+import TodoItem from "../TodoItem/TodoItem";
 import s from "./TodoList.module.scss";
 
 const TodoList: React.FC = () => {
-
-  const todos = useAppSelector(state => state.todos.todos);
+  const todos = useAppSelector((state) => state.todos.todos);
 
   return (
     <div className={s.todoList}>
@@ -16,14 +15,12 @@ const TodoList: React.FC = () => {
       <div className={s.todoList_scrollBox}>
         <ul>
           {todos.map((todo: ITodo) => {
-            return (
-              <TodoItem key={todo.id} todo={todo} />
-            );
+            return <TodoItem key={todo.id} {...todo} />;
           })}
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default TodoList;

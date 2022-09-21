@@ -15,17 +15,17 @@
 
   &_message {
     width: 5em;
-    //overflow-x:hidden;
     word-wrap: break-word;
   }
 
   &_expData {
 
 
-    p{
-      padding:0 !important;
+    p {
+      padding: 0 !important;
       color: rgb(238, 28, 28);
     }
+
     p:first-child {
       font-size: 13px;
     }
