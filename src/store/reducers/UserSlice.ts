@@ -4,6 +4,7 @@ import { ITodo, UserDate } from "../../models/ITodo";
 import { getCreationInputDate, getCreationInputDateExpiration, getCreationModalDate } from "../../utils/CreateDate";
 import { v4 as uuidv4 } from "uuid";
 
+
 interface CounterState {
   todos: ITodo[];
 }
@@ -37,6 +38,7 @@ export const counterSlice = createSlice({
     },
   },
 });
+
 
 export const { addTodo, addModalTodo } = counterSlice.actions;
 export default counterSlice.reducer;
