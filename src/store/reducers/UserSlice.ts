@@ -4,7 +4,6 @@ import { ITodo, UserDate } from "../../models/ITodo";
 import { getCreationInputDate, getCreationInputDateExpiration, getCreationModalDate } from "../../utils/CreateDate";
 import { v4 as uuidv4 } from "uuid";
 
-
 interface CounterState {
   todos: ITodo[];
 }
@@ -36,9 +35,14 @@ export const counterSlice = createSlice({
         dateExpiration: getCreationModalDate(action.payload.expDate),
       });
     },
+    completeTodo: (state, action: PayloadAction<string>) => {
+      // const completeTodo: ITodo | undefined = state.todos.find((todo) => todo.id === action.payload);
+      // completeTodo.completed = true;
+      // return state;
+      state.todos.map((todo) => (todo.id === action.payload ? (todo.completed = !todo.completed) : todo));
+    },
   },
 });
 
-
-export const { addTodo, addModalTodo } = counterSlice.actions;
+export const { addTodo, addModalTodo, completeTodo } = counterSlice.actions;
 export default counterSlice.reducer;
