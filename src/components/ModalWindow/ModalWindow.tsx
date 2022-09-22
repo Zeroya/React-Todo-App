@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -6,7 +6,7 @@ import { useAppDispatch } from "../../hooks/hooks";
 import { addModalTodo } from "../../store/reducers/UserSlice";
 import s from "./ModalWindow.module.scss";
 
-const ModalWindow: React.FC = () => {
+const ModalWindow: FC = () => {
   type TodoData = {
     message: string;
     date: string;

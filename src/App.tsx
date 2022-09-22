@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import TodoHeader from "./components/TodoHeader/TodoHeader";
 import TodoList from "./components/TodoList/TodoList";
 import "./App.css";
 
-const App: React.FC = () => {
+const App: FC = () => {
   return (
     <div className="App">
       <TodoHeader />

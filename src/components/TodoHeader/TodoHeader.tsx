@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { addTodo } from "../../store/reducers/UserSlice";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import InputGroup from "react-bootstrap/InputGroup";
 import s from "./TodoHeader.module.scss";
 
-const TodoHeader: React.FC = () => {
+const TodoHeader: FC = () => {
   const dispatch = useAppDispatch();
   const [input, setInput] = useState("");
 
