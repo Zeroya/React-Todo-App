@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { useAppSelector } from "../../hooks/hooks";
 import { ITodo } from "../../models/ITodo";
 import TodoItem from "../TodoItem/TodoItem";
 import s from "./TodoList.module.scss";
 
-const TodoList: React.FC = () => {
+const TodoList: FC = () => {
   const todos = useAppSelector((state) => state.todos.todos);
 
   return (
