@@ -53,18 +53,22 @@ const ModalWindow: FC = () => {
             <Modal.Title>Todo input</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <input
+            <Form.Label>Add message</Form.Label>
+            <Form.Control
               type="text"
               value={input.message}
               required
               onChange={handleChangeMessage}
               placeholder="message"
               pattern="^[A-Za-zА-Яа-яЁё0-9\s]+$"
+              autoFocus
             />
             <div style={{ margin: "0.5em 0 0.5em" }}>
-              <input type="datetime-local" required placeholder="start data" onChange={handleChangeData} />
+              <Form.Label>Creation date</Form.Label>
+              <Form.Control type="datetime-local" required placeholder="start data" onChange={handleChangeData} />
             </div>
-            <input type="datetime-local" placeholder="expiration data" required onChange={handleChangeExpData} />
+            <Form.Label>Expiration date</Form.Label>
+            <Form.Control type="datetime-local" placeholder="expiration data" required onChange={handleChangeExpData} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={handleClose}>

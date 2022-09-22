@@ -38,8 +38,12 @@ export const counterSlice = createSlice({
     completeTodo: (state, action: PayloadAction<string>) => {
       state.todos.map((todo) => (todo.id === action.payload ? (todo.completed = !todo.completed) : todo));
     },
+    deleteTodo: (state, action: PayloadAction<string>) => {
+      const index = state.todos.findIndex((todo) => todo.id === action.payload);
+      state.todos.splice(index, 1);
+    },
   },
 });
 
-export const { addTodo, addModalTodo, completeTodo } = counterSlice.actions;
+export const { addTodo, addModalTodo, completeTodo, deleteTodo } = counterSlice.actions;
 export default counterSlice.reducer;

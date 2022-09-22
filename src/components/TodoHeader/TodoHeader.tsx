@@ -11,8 +11,10 @@ const TodoHeader: FC = () => {
 
   const submitValue = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(addTodo(input));
-    setInput("");
+    if (input.trim() !== "") {
+      dispatch(addTodo(input));
+      setInput("");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -30,6 +32,7 @@ const TodoHeader: FC = () => {
             className={s.todoHeader_input}
             type="text"
             pattern="^[A-Za-zА-Яа-яЁё0-9\s]+$"
+            required
           />
           <InputGroup.Text className={s.todoHeader_modal}>
             <ModalWindow />
