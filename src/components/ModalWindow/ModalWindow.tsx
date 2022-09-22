@@ -55,6 +55,7 @@ const ModalWindow: FC = () => {
           <Modal.Body>
             <Form.Label>Add message</Form.Label>
             <Form.Control
+              className={s.formControl}
               type="text"
               value={input.message}
               required
@@ -65,10 +66,23 @@ const ModalWindow: FC = () => {
             />
             <div style={{ margin: "0.5em 0 0.5em" }}>
               <Form.Label>Creation date</Form.Label>
-              <Form.Control type="datetime-local" required placeholder="start data" onChange={handleChangeData} />
+              <Form.Control
+                className={s.formControl}
+                type="datetime-local"
+                required
+                placeholder="start data"
+                onChange={handleChangeData}
+              />
             </div>
             <Form.Label>Expiration date</Form.Label>
-            <Form.Control type="datetime-local" placeholder="expiration data" required onChange={handleChangeExpData} />
+            <Form.Control
+              className={s.formControl}
+              type="datetime-local"
+              placeholder="expiration data"
+              min={input.date}
+              required
+              onChange={handleChangeExpData}
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={handleClose}>
