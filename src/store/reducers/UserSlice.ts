@@ -36,9 +36,6 @@ export const counterSlice = createSlice({
       });
     },
     completeTodo: (state, action: PayloadAction<string>) => {
-      // const completeTodo: ITodo | undefined = state.todos.find((todo) => todo.id === action.payload);
-      // completeTodo.completed = true;
-      // return state;
       state.todos.map((todo) => (todo.id === action.payload ? (todo.completed = !todo.completed) : todo));
     },
   },
