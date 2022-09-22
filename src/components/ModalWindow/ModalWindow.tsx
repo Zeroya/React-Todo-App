@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, FormEvent, ChangeEvent } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -21,7 +21,7 @@ const ModalWindow: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (/^[A-Za-zА-Яа-яЁё0-9\s]+$/.test(input.message) && /[0-9]+/.test(input.date) && /[0-9]+/.test(input.expDate)) {
       dispatch(addModalTodo(input));
@@ -30,15 +30,15 @@ const ModalWindow: FC = () => {
     }
   };
 
-  const handleChangeMessage = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeMessage = (e: ChangeEvent<HTMLInputElement>): void => {
     setInput({ ...input, message: e.target.value });
   };
 
-  const handleChangeData = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeData = (e: ChangeEvent<HTMLInputElement>): void => {
     setInput({ ...input, date: e.target.value });
   };
 
-  const handleChangeExpData = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeExpData = (e: ChangeEvent<HTMLInputElement>): void => {
     setInput({ ...input, expDate: e.target.value });
   };
 

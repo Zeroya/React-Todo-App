@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, FormEvent, ChangeEvent } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { addTodo } from "../../store/reducers/UserSlice";
 import ModalWindow from "../ModalWindow/ModalWindow";
@@ -9,15 +9,15 @@ const TodoHeader: FC = () => {
   const dispatch = useAppDispatch();
   const [input, setInput] = useState("");
 
-  const submitValue = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitValue = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (input.trim() !== "") {
+    if (!input.trim()) {
       dispatch(addTodo(input));
       setInput("");
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setInput(e.target.value);
   };
 

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, ChangeEvent, MouseEvent } from "react";
 import { ITodo } from "../../models/ITodo";
 import { completeTodo, deleteTodo } from "../../store/reducers/UserSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -7,11 +7,11 @@ import s from "./TodoItem.module.scss";
 const TodoItem: FC<ITodo> = ({ id, message, date, dateExpiration, completed }) => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector((state) => state.todos.todos);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     dispatch(completeTodo(id));
   };
 
-  const handleDelete = (e: React.MouseEvent<HTMLSpanElement>): void => {
+  const handleDelete = (e: MouseEvent<HTMLSpanElement>): void => {
     dispatch(deleteTodo(id));
   };
 
