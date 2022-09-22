@@ -39,8 +39,7 @@ export const counterSlice = createSlice({
       state.todos.map((todo) => (todo.id === action.payload ? (todo.completed = !todo.completed) : todo));
     },
     deleteTodo: (state, action: PayloadAction<string>) => {
-      const index = state.todos.findIndex((todo) => todo.id === action.payload);
-      state.todos.splice(index, 1);
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
   },
 });

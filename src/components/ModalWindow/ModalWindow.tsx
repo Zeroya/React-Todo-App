@@ -30,16 +30,8 @@ const ModalWindow: FC = () => {
     }
   };
 
-  const handleChangeMessage = (e: ChangeEvent<HTMLInputElement>): void => {
-    setInput({ ...input, message: e.target.value });
-  };
-
-  const handleChangeData = (e: ChangeEvent<HTMLInputElement>): void => {
-    setInput({ ...input, date: e.target.value });
-  };
-
-  const handleChangeExpData = (e: ChangeEvent<HTMLInputElement>): void => {
-    setInput({ ...input, expDate: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, fieldName: string): void => {
+    setInput({ ...input, [fieldName]: e.target.value });
   };
 
   return (
@@ -59,7 +51,7 @@ const ModalWindow: FC = () => {
               type="text"
               value={input.message}
               required
-              onChange={handleChangeMessage}
+              onChange={(e: any) => handleChange(e, "message")}
               placeholder="message"
               pattern="^[A-Za-zА-Яа-яЁё0-9\s]+$"
               autoFocus
@@ -71,7 +63,7 @@ const ModalWindow: FC = () => {
                 type="datetime-local"
                 required
                 placeholder="start data"
-                onChange={handleChangeData}
+                onChange={(e: any) => handleChange(e, "date")}
               />
             </div>
             <Form.Label>Expiration date</Form.Label>
@@ -81,7 +73,7 @@ const ModalWindow: FC = () => {
               placeholder="expiration data"
               min={input.date}
               required
-              onChange={handleChangeExpData}
+              onChange={(e: any) => handleChange(e, "expDate")}
             />
           </Modal.Body>
           <Modal.Footer>
