@@ -28,7 +28,7 @@ const TodoItem: React.FC<ITodo> = ({ id, message, date, dateExpiration, complete
         <p>{date}</p>
       </div>
       <div className={`${s.todoItem_expData} ${completed ? s.completed : ""}`}>
-        <p>Expiration data</p>
+        <p>Expiration date</p>
         <p>{dateExpiration}</p>
       </div>
       <span>
