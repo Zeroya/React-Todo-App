@@ -11,7 +11,7 @@ const TodoHeader: FC = () => {
 
   const submitValue = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!input.trim()) {
+    if (input.trim() !== "") {
       dispatch(addTodo(input));
       setInput("");
     }
