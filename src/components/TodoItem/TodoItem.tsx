@@ -23,7 +23,7 @@ const TodoItem: React.FC<ITodo> = ({ id, message, date, dateExpiration, complete
       <div className={s.todoItem_message}>
         <p className={`${completed ? s.completed : ""}`}>{message}</p>
       </div>
-      <div className={`${s.todoItem_expData} ${completed ? s.completed : ""}`}>
+      <div className={`${s.todoItem_expData} ${s.todoItem_textColor} ${completed ? s.completed : ""}`}>
         <p>Creation date</p>
         <p>{date}</p>
       </div>
