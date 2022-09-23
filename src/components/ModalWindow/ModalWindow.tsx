@@ -1,19 +1,14 @@
-import React, { FC, useState, FormEvent, ChangeEvent } from "react";
+import React, { FC, useState, useLayoutEffect, FormEvent, ChangeEvent } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { useAppDispatch } from "../../hooks/hooks";
-import { addModalTodo } from "../../store/reducers/UserSlice";
+import { IChange, TodoData } from "../../models/ITodo";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { addModalTodo, updateTodo } from "../../store/reducers/UserSlice";
 import s from "./ModalWindow.module.scss";
 
-const ModalWindow: FC = () => {
-  type TodoData = {
-    message: string;
-    date: string;
-    expDate: string;
-  };
-
-  const [input, setInput] = useState<TodoData>({ message: "", date: "", expDate: "" });
+const ModalWindow: FC<IChange> = ({ type, message, dateStored, idd }) => {
+  const [input, setInput] = useState<TodoData>({ message: "", date: "", expDate: "", idd: `${idd}` });
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -21,24 +16,40 @@ const ModalWindow: FC = () => {
 
   const dispatch = useAppDispatch();
 
+  const todos = useAppSelector((state) => state.todos.todos);
+
   const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (/^[A-Za-zА-Яа-яЁё0-9\s]+$/.test(input.message) && /[0-9]+/.test(input.date) && /[0-9]+/.test(input.expDate)) {
-      dispatch(addModalTodo(input));
-      setInput({ message: "", date: "", expDate: "" });
-      setShow(false);
+      if (!type) {
+        dispatch(addModalTodo(input));
+        setInput({ message: "", date: "", expDate: "", idd: "" });
+        setShow(false);
+      } else {
+        dispatch(updateTodo(input));
+        console.log(todos);
+        setShow(false);
+      }
     }
   };
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>, fieldName: string): void => {
     setInput({ ...input, [fieldName]: e.target.value });
   };
+
+  useLayoutEffect(() => {
+    setInput({ ...input, message: `${message}`, date: `${dateStored?.date}`, expDate: `${dateStored?.expDate}` });
+    console.log(dateStored?.date);
+  }, [type]);
 
   return (
     <>
       <Form>
         <span onClick={handleShow}>
-          <i className={`fa fa-plus ${s.plusSimbol}`} aria-hidden="true"></i>
+          {type ? (
+            <i className={`fa fa-pencil ${s.pencilSimbol}`} aria-hidden="true"></i>
+          ) : (
+            <i className={`fa fa-plus ${s.plusSimbol}`} aria-hidden="true"></i>
+          )}
         </span>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -49,7 +60,7 @@ const ModalWindow: FC = () => {
             <Form.Control
               className={s.formControl}
               type="text"
-              value={input.message}
+              value={`${input.message === "undefined" ? "" : input.message}`}
               required
               onChange={(e: any) => handleChange(e, "message")}
               placeholder="message"
@@ -61,8 +72,8 @@ const ModalWindow: FC = () => {
               <Form.Control
                 className={s.formControl}
                 type="datetime-local"
+                value={input.date}
                 required
-                placeholder="start data"
                 onChange={(e: any) => handleChange(e, "date")}
               />
             </div>
@@ -70,7 +81,7 @@ const ModalWindow: FC = () => {
             <Form.Control
               className={s.formControl}
               type="datetime-local"
-              placeholder="expiration data"
+              value={input.expDate}
               min={input.date}
               required
               onChange={(e: any) => handleChange(e, "expDate")}
