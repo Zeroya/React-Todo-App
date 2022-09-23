@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, FormEvent, ChangeEvent } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -21,7 +21,7 @@ const ModalWindow: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (/^[A-Za-zА-Яа-яЁё0-9\s]+$/.test(input.message) && /[0-9]+/.test(input.date) && /[0-9]+/.test(input.expDate)) {
       dispatch(addModalTodo(input));
@@ -30,16 +30,8 @@ const ModalWindow: FC = () => {
     }
   };
 
-  const handleChangeMessage = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInput({ ...input, message: e.target.value });
-  };
-
-  const handleChangeData = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInput({ ...input, date: e.target.value });
-  };
-
-  const handleChangeExpData = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInput({ ...input, expDate: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, fieldName: string): void => {
+    setInput({ ...input, [fieldName]: e.target.value });
   };
 
   return (
@@ -53,18 +45,36 @@ const ModalWindow: FC = () => {
             <Modal.Title>Todo input</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <input
+            <Form.Label>Add message</Form.Label>
+            <Form.Control
+              className={s.formControl}
               type="text"
               value={input.message}
               required
-              onChange={handleChangeMessage}
+              onChange={(e: any) => handleChange(e, "message")}
               placeholder="message"
               pattern="^[A-Za-zА-Яа-яЁё0-9\s]+$"
+              autoFocus
             />
             <div style={{ margin: "0.5em 0 0.5em" }}>
-              <input type="datetime-local" required placeholder="start data" onChange={handleChangeData} />
+              <Form.Label>Creation date</Form.Label>
+              <Form.Control
+                className={s.formControl}
+                type="datetime-local"
+                required
+                placeholder="start data"
+                onChange={(e: any) => handleChange(e, "date")}
+              />
             </div>
-            <input type="datetime-local" placeholder="expiration data" required onChange={handleChangeExpData} />
+            <Form.Label>Expiration date</Form.Label>
+            <Form.Control
+              className={s.formControl}
+              type="datetime-local"
+              placeholder="expiration data"
+              min={input.date}
+              required
+              onChange={(e: any) => handleChange(e, "expDate")}
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={handleClose}>

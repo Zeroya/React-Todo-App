@@ -6,12 +6,12 @@
   width: 35rem;
   overflow-y: hidden;
 
-&_scrollBox {
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  height: 100%;
-  
-}
+  &_scrollBox {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    height: 84%;
+
+  }
 
   h1 {
     background: rgba(175, 26, 26, 0.918);

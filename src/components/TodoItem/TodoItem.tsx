@@ -1,14 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, ChangeEvent, MouseEvent } from "react";
 import { ITodo } from "../../models/ITodo";
-import { completeTodo } from "../../store/reducers/UserSlice";
+import { completeTodo, deleteTodo } from "../../store/reducers/UserSlice";
 import { useAppDispatch } from "../../hooks/hooks";
 import s from "./TodoItem.module.scss";
 
 const TodoItem: FC<ITodo> = ({ id, message, date, dateExpiration, completed }) => {
   const dispatch = useAppDispatch();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     dispatch(completeTodo(id));
+  };
+
+  const handleDelete = (e: MouseEvent<HTMLSpanElement>): void => {
+    dispatch(deleteTodo(id));
   };
 
   const completeLogic = completed ? s.completed : "";
@@ -33,8 +37,8 @@ const TodoItem: FC<ITodo> = ({ id, message, date, dateExpiration, completed }) =
         <p>Expiration date</p>
         <p>{dateExpiration}</p>
       </div>
-      <span>
-        <i className="fa fa-trash" aria-hidden="true"></i>
+      <span onClick={handleDelete}>
+        <i className="fa fa-times" aria-hidden="true"></i>
       </span>
     </li>
   );
