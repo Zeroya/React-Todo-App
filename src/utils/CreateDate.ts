@@ -51,12 +51,6 @@ export const getCreationStoredInputDate = (): string => {
     new Date().getHours() +
     ":" +
     new Date().getMinutes()
-    // .toLocaleTimeString()
-    // .split("")
-    // .filter((el, i, arr) =>
-    //   arr.length === 11 ? i < 5 || i > 11 : arr.length === 10 ? i < 4 || i > 10 : i < arr.length - 3
-    // )
-    // .join("")
   );
 };
 
@@ -77,12 +71,6 @@ export const getCreationStoredDateExpiration = (): string => {
     new Date().getHours() +
     ":" +
     new Date().getMinutes()
-    // .toLocaleTimeString()
-    // .split("")
-    // .filter((el, i, arr) =>
-    //   arr.length === 11 ? i < 5 || i > 11 : arr.length === 10 ? i < 4 || i > 10 : i < arr.length - 3
-    // )
-    // .join("")
   );
 };
 

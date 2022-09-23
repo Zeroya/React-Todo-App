@@ -53,13 +53,14 @@ export const counterSlice = createSlice({
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
     updateTodo: (state, action: PayloadAction<TodoData>) => {
+      const { message, date, expDate } = action.payload;
       state.todos = state.todos.map((todo) =>
         todo.id === action.payload.idd
           ? {
               ...todo,
-              message: action.payload.message,
-              date: getCreationModalDate(action.payload.date),
-              dateExpiration: getCreationModalDate(action.payload.expDate),
+              message: message,
+              date: getCreationModalDate(date),
+              dateExpiration: getCreationModalDate(expDate),
             }
           : todo
       );
