@@ -27,7 +27,6 @@ const ModalWindow: FC<IChange> = ({ type, message, dateStored, idd }) => {
         setShow(false);
       } else {
         dispatch(updateTodo(input));
-        console.log(todos);
         setShow(false);
       }
     }
@@ -38,7 +37,12 @@ const ModalWindow: FC<IChange> = ({ type, message, dateStored, idd }) => {
 
   useLayoutEffect(() => {
     setInput({ ...input, message: `${message}`, date: `${dateStored?.date}`, expDate: `${dateStored?.expDate}` });
-    console.log(dateStored?.date);
+    console.log(new Date());
+    console.log(new Date().toLocaleDateString());
+    console.log(new Date().toLocaleTimeString());
+    console.log(new Date().getTime());
+    console.log(new Date().getHours());
+    console.log(new Date().getMinutes());
   }, [type]);
 
   return (
