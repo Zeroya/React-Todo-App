@@ -37,13 +37,14 @@ export const counterSlice = createSlice({
       });
     },
     addModalTodo: (state, action: PayloadAction<UserDate>) => {
+      const { message, date, expDate } = action.payload;
       state.todos.push({
         id: uuidv4(),
-        message: action.payload.message,
+        message: message,
         completed: false,
-        date: getCreationModalDate(action.payload.date),
-        dateExpiration: getCreationModalDate(action.payload.expDate),
-        dateStored: { date: action.payload.date, expDate: action.payload.expDate },
+        date: getCreationModalDate(date),
+        dateExpiration: getCreationModalDate(expDate),
+        dateStored: { date, expDate },
       });
     },
     completeTodo: (state, action: PayloadAction<string>) => {

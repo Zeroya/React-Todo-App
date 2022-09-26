@@ -26,9 +26,7 @@ export interface UserDate {
 export interface IChange {
   type?: string;
   message?: string;
-  dateStored?: {
-    date: string;
-    expDate: string;
-  };
+  date?: string;
+  expDate?: string;
   idd?: string;
 }

@@ -40,7 +40,7 @@ const TodoItem: FC<ITodo> = ({ id, message, date, dateExpiration, completed, dat
       </div>
       <div className={s.todoItem_changeField}>
         <span>
-          <ModalWindow type="chenge" message={message} dateStored={dateStored} idd={id} />
+          <ModalWindow type="chenge" message={message} date={dateStored.date} expDate={dateStored.expDate} idd={id} />
         </span>
         <span onClick={handleDelete}>
           <i className="fa fa-times" aria-hidden="true"></i>

@@ -7,8 +7,13 @@ import { useAppDispatch } from "../../hooks/hooks";
 import { addModalTodo, updateTodo } from "../../store/reducers/UserSlice";
 import s from "./ModalWindow.module.scss";
 
-const ModalWindow: FC<IChange> = ({ type, message, dateStored, idd }) => {
-  const [input, setInput] = useState<TodoData>({ message: "", date: "", expDate: "", idd: `${idd}` });
+const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
+  const [input, setInput] = useState<TodoData>({
+    message: "",
+    date: "",
+    expDate: "",
+    idd: `${idd}`,
+  });
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -18,7 +23,14 @@ const ModalWindow: FC<IChange> = ({ type, message, dateStored, idd }) => {
 
   const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (/^[A-Za-zА-Яа-яЁё0-9\s]+$/.test(input.message) && /[0-9]+/.test(input.date) && /[0-9]+/.test(input.expDate)) {
+    if (
+      input.message &&
+      input.date &&
+      input.expDate &&
+      /^[A-Za-zА-Яа-яЁё0-9\s]+$/.test(input.message) &&
+      /[0-9]+/.test(input.date) &&
+      /[0-9]+/.test(input.expDate)
+    ) {
       if (!type) {
         dispatch(addModalTodo(input));
         setInput({ message: "", date: "", expDate: "", idd: "" });
@@ -35,7 +47,7 @@ const ModalWindow: FC<IChange> = ({ type, message, dateStored, idd }) => {
   };
 
   useLayoutEffect(() => {
-    setInput({ ...input, message: `${message}`, date: `${dateStored?.date}`, expDate: `${dateStored?.expDate}` });
+    message && date && expDate !== undefined && setInput({ ...input, message, date, expDate });
   }, [type]);
 
   return (
@@ -56,7 +68,7 @@ const ModalWindow: FC<IChange> = ({ type, message, dateStored, idd }) => {
             <Form.Control
               className={s.formControl}
               type="text"
-              value={`${input.message === "undefined" ? "" : input.message}`}
+              value={input.message}
               required
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, "message")}
               placeholder="message"
