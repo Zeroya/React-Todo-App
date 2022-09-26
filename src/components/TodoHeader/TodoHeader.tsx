@@ -1,11 +1,12 @@
 import React, { FC, useState, FormEvent, ChangeEvent } from "react";
-import { useAppDispatch } from "../../hooks/hooks";
-import { addTodo } from "../../store/reducers/UserSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { addTodo, checker } from "../../store/reducers/UserSlice";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import InputGroup from "react-bootstrap/InputGroup";
 import s from "./TodoHeader.module.scss";
 
 const TodoHeader: FC = () => {
+  const filtValue = useAppSelector((state) => state.todos.filtValue);
   const dispatch = useAppDispatch();
   const [input, setInput] = useState("");
 
@@ -14,6 +15,9 @@ const TodoHeader: FC = () => {
     if (input.trim()) {
       dispatch(addTodo(input));
       setInput("");
+      if (filtValue === "active" || filtValue === "completed") {
+        dispatch(checker());
+      }
     }
   };
 

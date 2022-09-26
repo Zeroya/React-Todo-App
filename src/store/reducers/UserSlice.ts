@@ -12,10 +12,14 @@ import { v4 as uuidv4 } from "uuid";
 
 interface CounterState {
   todos: ITodo[];
+  filtValue: string;
+  checker: boolean;
 }
 
 const initialState: CounterState = {
   todos: [],
+  filtValue: "all",
+  checker: false,
 };
 
 export const counterSlice = createSlice({
@@ -66,8 +70,16 @@ export const counterSlice = createSlice({
           : todo
       );
     },
+    checker: (state) => {
+      state.checker = !state.checker;
+    },
+    filterTodos: (state, action: PayloadAction<string>) => {
+      action.payload === "сlearCompleted" && (state.todos = state.todos.filter((todo) => todo.completed === false));
+      (action.payload === "active" || "completed" || "all") && (state.filtValue = action.payload);
+    },
   },
 });
 
-export const { addTodo, addModalTodo, completeTodo, deleteTodo, updateTodo } = counterSlice.actions;
+export const { addTodo, addModalTodo, completeTodo, deleteTodo, updateTodo, filterTodos, checker } =
+  counterSlice.actions;
 export default counterSlice.reducer;
