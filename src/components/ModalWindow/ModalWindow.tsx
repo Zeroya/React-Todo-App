@@ -47,7 +47,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
   };
 
   useLayoutEffect(() => {
-    message && date && expDate !== undefined && setInput({ ...input, message, date, expDate });
+    message && date && expDate && setInput({ ...input, message, date, expDate });
   }, [type]);
 
   return (
