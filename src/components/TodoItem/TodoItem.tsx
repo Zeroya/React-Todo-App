@@ -3,8 +3,9 @@ import { ITodo } from "../../models/ITodo";
 import { completeTodo, deleteTodo } from "../../store/reducers/UserSlice";
 import { useAppDispatch } from "../../hooks/hooks";
 import s from "./TodoItem.module.scss";
+import ModalWindow from "../ModalWindow/ModalWindow";
 
-const TodoItem: FC<ITodo> = ({ id, message, date, dateExpiration, completed }) => {
+const TodoItem: FC<ITodo> = ({ id, message, date, dateExpiration, completed, dateStored }) => {
   const dispatch = useAppDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -37,9 +38,14 @@ const TodoItem: FC<ITodo> = ({ id, message, date, dateExpiration, completed }) =
         <p>Expiration date</p>
         <p>{dateExpiration}</p>
       </div>
-      <span onClick={handleDelete}>
-        <i className="fa fa-times" aria-hidden="true"></i>
-      </span>
+      <div className={s.todoItem_changeField}>
+        <span>
+          <ModalWindow type="chenge" message={message} date={dateStored.date} expDate={dateStored.expDate} idd={id} />
+        </span>
+        <span onClick={handleDelete}>
+          <i className="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </div>
     </li>
   );
 };

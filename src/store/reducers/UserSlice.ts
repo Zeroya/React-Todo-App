@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ITodo, UserDate } from "../../models/ITodo";
-import { getCreationInputDate, getCreationInputDateExpiration, getCreationModalDate } from "../../utils/CreateDate";
+import { ITodo, UserDate, TodoData } from "../../models/ITodo";
+import {
+  getCreationInputDate,
+  getCreationInputDateExpiration,
+  getCreationModalDate,
+  getCreationStoredInputDate,
+  getCreationStoredDateExpiration,
+} from "../../utils/CreateDate";
 import { v4 as uuidv4 } from "uuid";
 
 interface CounterState {
@@ -24,15 +30,21 @@ export const counterSlice = createSlice({
         completed: false,
         date: getCreationInputDate(),
         dateExpiration: getCreationInputDateExpiration(),
+        dateStored: {
+          date: getCreationStoredInputDate(),
+          expDate: getCreationStoredDateExpiration(),
+        },
       });
     },
     addModalTodo: (state, action: PayloadAction<UserDate>) => {
+      const { message, date, expDate } = action.payload;
       state.todos.push({
         id: uuidv4(),
-        message: action.payload.message,
+        message: message,
         completed: false,
-        date: getCreationModalDate(action.payload.date),
-        dateExpiration: getCreationModalDate(action.payload.expDate),
+        date: getCreationModalDate(date),
+        dateExpiration: getCreationModalDate(expDate),
+        dateStored: { date, expDate },
       });
     },
     completeTodo: (state, action: PayloadAction<string>) => {
@@ -41,8 +53,21 @@ export const counterSlice = createSlice({
     deleteTodo: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
+    updateTodo: (state, action: PayloadAction<TodoData>) => {
+      const { message, date, expDate } = action.payload;
+      state.todos = state.todos.map((todo) =>
+        todo.id === action.payload.idd
+          ? {
+              ...todo,
+              message: message,
+              date: getCreationModalDate(date),
+              dateExpiration: getCreationModalDate(expDate),
+            }
+          : todo
+      );
+    },
   },
 });
 
-export const { addTodo, addModalTodo, completeTodo, deleteTodo } = counterSlice.actions;
+export const { addTodo, addModalTodo, completeTodo, deleteTodo, updateTodo } = counterSlice.actions;
 export default counterSlice.reducer;

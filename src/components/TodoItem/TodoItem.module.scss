@@ -46,3 +46,11 @@
 .todoItem_textColor p {
   color: white;
 }
+
+.todoItem_changeField {
+  display: flex;
+
+  span {
+    margin-left: 0.5rem;
+  }
+}
