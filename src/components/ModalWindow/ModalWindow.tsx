@@ -3,11 +3,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { IChange, TodoData } from "../../models/ITodo";
-import { useAppDispatch } from "../../hooks/hooks";
-import { addModalTodo, updateTodo } from "../../store/reducers/UserSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { Сondition } from "../../models/Enums";
+import { addModalTodo, updateTodo, checker } from "../../store/reducers/UserSlice";
 import s from "./ModalWindow.module.scss";
 
 const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
+  const filtValue = useAppSelector((state) => state.todos.filtValue);
   const [input, setInput] = useState<TodoData>({
     message: "",
     date: "",
@@ -33,6 +35,9 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
     ) {
       if (!type) {
         dispatch(addModalTodo(input));
+        if (filtValue === Сondition.active || filtValue === Сondition.completed) {
+          dispatch(checker());
+        }
         setInput({ message: "", date: "", expDate: "", idd: "" });
         setShow(false);
       } else {
