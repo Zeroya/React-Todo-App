@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Сondition } from "../../models/Enums";
+import { Сondition, SortOptions } from "../../models/Enums";
 import { ITodo, UserDate, TodoData } from "../../models/ITodo";
 import {
   getCreationInputDate,
@@ -45,7 +45,7 @@ export const counterSlice = createSlice({
       const { message, date, expDate } = action.payload;
       state.todos.push({
         id: uuidv4(),
-        message: message,
+        message,
         completed: false,
         date: getCreationModalDate(date),
         dateExpiration: getCreationModalDate(expDate),
@@ -64,7 +64,7 @@ export const counterSlice = createSlice({
         todo.id === action.payload.idd
           ? {
               ...todo,
-              message: message,
+              message,
               date: getCreationModalDate(date),
               dateExpiration: getCreationModalDate(expDate),
             }
@@ -79,9 +79,20 @@ export const counterSlice = createSlice({
       (action.payload === Сondition.active || Сondition.completed || Сondition.all) &&
         (state.filtValue = action.payload);
     },
+    sortTodosBy: (state, action: PayloadAction<string>) => {
+      SortOptions.message === action.payload &&
+        (state.todos = state.todos.sort((a: ITodo, b: ITodo) => (a.message > b.message ? 1 : -1)));
+      SortOptions.date === action.payload &&
+        (state.todos = state.todos.sort((a: ITodo, b: ITodo) => {
+          let dateA = new Date(getCreationModalDate(a.dateExpiration)).getTime();
+          let dateB = new Date(getCreationModalDate(b.dateExpiration)).getTime();
+          console.log(getCreationModalDate(a.dateExpiration));
+          return dateA > dateB ? 1 : -1;
+        }));
+    },
   },
 });
 
-export const { addTodo, addModalTodo, completeTodo, deleteTodo, updateTodo, filterTodos, checker } =
+export const { addTodo, addModalTodo, completeTodo, deleteTodo, updateTodo, filterTodos, checker, sortTodosBy } =
   counterSlice.actions;
 export default counterSlice.reducer;
