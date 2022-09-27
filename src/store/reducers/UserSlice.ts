@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { Сondition } from "../../models/Enums";
 import { ITodo, UserDate, TodoData } from "../../models/ITodo";
 import {
   getCreationInputDate,
@@ -18,7 +19,7 @@ interface CounterState {
 
 const initialState: CounterState = {
   todos: [],
-  filtValue: "all",
+  filtValue: Сondition.all,
   checker: false,
 };
 
@@ -75,7 +76,8 @@ export const counterSlice = createSlice({
     },
     filterTodos: (state, action: PayloadAction<string>) => {
       action.payload === "сlearCompleted" && (state.todos = state.todos.filter((todo) => todo.completed === false));
-      (action.payload === "active" || "completed" || "all") && (state.filtValue = action.payload);
+      (action.payload === Сondition.active || Сondition.completed || Сondition.all) &&
+        (state.filtValue = action.payload);
     },
   },
 });
