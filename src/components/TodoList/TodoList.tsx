@@ -24,7 +24,7 @@ const TodoList: FC = () => {
         <h1>Todo List</h1>
       </div>
       <div className={s.todoList_scrollBox}>
-        {filtValue === Сondition.completed && todoBlock.length === 0 && <p>there is nothing here, add first...</p>}
+        {filtValue === Сondition.completed && !todoBlock.length && <p>there is nothing here, add first...</p>}
         <ul>{todoBlock}</ul>
       </div>
     </div>
