@@ -9,11 +9,8 @@ import s from "./TodoHeader.module.scss";
 
 const TodoHeader: FC = () => {
   const filtValue = useAppSelector((state) => state.todos.filtValue);
-  const test = useAppSelector((state) => state.todos.todos);
   const dispatch = useAppDispatch();
   const [input, setInput] = useState("");
-
-  console.log(test);
 
   const submitValue = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
