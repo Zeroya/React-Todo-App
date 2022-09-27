@@ -75,7 +75,7 @@ export const counterSlice = createSlice({
       state.checker = !state.checker;
     },
     filterTodos: (state, action: PayloadAction<string>) => {
-      action.payload === "сlearCompleted" && (state.todos = state.todos.filter((todo) => todo.completed === false));
+      action.payload === "сlearCompleted" && (state.todos = state.todos.filter((todo) => !todo.completed));
       (action.payload === Сondition.active || Сondition.completed || Сondition.all) &&
         (state.filtValue = action.payload);
     },
