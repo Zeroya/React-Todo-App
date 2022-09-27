@@ -20,6 +20,11 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  enum Сondition {
+    active,
+    completed,
+  }
+
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
@@ -34,7 +39,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
     ) {
       if (!type) {
         dispatch(addModalTodo(input));
-        if (filtValue === "active" || filtValue === "completed") {
+        if (filtValue === Сondition[0] || filtValue === Сondition[1]) {
           dispatch(checker());
         }
         setInput({ message: "", date: "", expDate: "", idd: "" });

@@ -12,7 +12,7 @@ const TodoButtons = () => {
 
   const handleClick = (fieldName: string, strNum?: number): void => {
     setClick(click.map((el, i, arr) => (i === strNum ? !el : false)));
-    typeof strNum !== "number" && setClick(click.map((el, i) => (i === 0 ? true : false)));
+    typeof strNum !== "number" && setClick(click.map((_, i) => i === 0 && true));
     dispatch(filterTodos(fieldName));
   };
 
@@ -21,17 +21,32 @@ const TodoButtons = () => {
   }, [checkerValue]);
 
   return (
-    <div className={s.buttons}>
-      <Button variant="outline-danger" active={click[0]} onClick={() => handleClick("all", 0)}>
+    <div className={s.todoButtons}>
+      <Button
+        className={s.todoButtons_button}
+        variant="outline-danger"
+        active={click[0]}
+        onClick={() => handleClick("all", 0)}
+      >
         All
       </Button>
-      <Button variant="outline-danger" active={click[1]} onClick={() => handleClick("active", 1)}>
+      <Button
+        className={s.todoButtons_button}
+        variant="outline-danger"
+        active={click[1]}
+        onClick={() => handleClick("active", 1)}
+      >
         Active
       </Button>
-      <Button variant="outline-danger" active={click[2]} onClick={() => handleClick("completed", 2)}>
+      <Button
+        className={s.todoButtons_button}
+        variant="outline-danger"
+        active={click[2]}
+        onClick={() => handleClick("completed", 2)}
+      >
         Completed
       </Button>
-      <Button variant="outline-danger" onClick={() => handleClick("сlearCompleted")}>
+      <Button className={s.todoButtons_button} variant="outline-danger" onClick={() => handleClick("сlearCompleted")}>
         Clear completed
       </Button>
     </div>

@@ -1,7 +1,7 @@
-.buttons {
+.todoButtons {
   margin-top: 1.5em;
 
-  Button {
+  &_button {
     margin-left: 1em;
     background: rgba(175, 26, 26, 0.066);
   }

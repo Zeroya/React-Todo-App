@@ -10,12 +10,17 @@ const TodoHeader: FC = () => {
   const dispatch = useAppDispatch();
   const [input, setInput] = useState("");
 
+  enum Сondition {
+    active,
+    completed,
+  }
+
   const submitValue = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (input.trim()) {
       dispatch(addTodo(input));
       setInput("");
-      if (filtValue === "active" || filtValue === "completed") {
+      if (filtValue === Сondition[0] || filtValue === Сondition[1]) {
         dispatch(checker());
       }
     }
