@@ -86,7 +86,6 @@ export const counterSlice = createSlice({
         (state.todos = state.todos.sort((a: ITodo, b: ITodo) => {
           let dateA = new Date(getCreationModalDate(a.dateExpiration)).getTime();
           let dateB = new Date(getCreationModalDate(b.dateExpiration)).getTime();
-          console.log(getCreationModalDate(a.dateExpiration));
           return dateA > dateB ? 1 : -1;
         }));
     },
