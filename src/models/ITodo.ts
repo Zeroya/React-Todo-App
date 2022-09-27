@@ -30,11 +30,3 @@ export interface IChange {
   expDate?: string;
   idd?: string;
 }
-
-export interface whyQQQ {
-  type?: string;
-  message?: string;
-  date?: string;
-  expDate?: string;
-  idd?: string;
-}
