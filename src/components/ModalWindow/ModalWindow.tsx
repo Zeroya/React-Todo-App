@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { IChange, TodoData } from "../../models/ITodo";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { Сondition } from "../../models/Enums";
 import { addModalTodo, updateTodo, checker } from "../../store/reducers/UserSlice";
 import s from "./ModalWindow.module.scss";
 
@@ -20,11 +21,6 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  enum Сondition {
-    active,
-    completed,
-  }
-
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
@@ -39,7 +35,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
     ) {
       if (!type) {
         dispatch(addModalTodo(input));
-        if (filtValue === Сondition[0] || filtValue === Сondition[1]) {
+        if (filtValue === Сondition.active || filtValue === Сondition.completed) {
           dispatch(checker());
         }
         setInput({ message: "", date: "", expDate: "", idd: "" });

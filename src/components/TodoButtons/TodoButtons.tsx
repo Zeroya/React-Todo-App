@@ -12,7 +12,7 @@ const TodoButtons = () => {
 
   const handleClick = (fieldName: string, strNum?: number): void => {
     setClick(click.map((el, i, arr) => (i === strNum ? !el : false)));
-    typeof strNum !== "number" && setClick(click.map((_, i) => i === 0 && true));
+    typeof strNum !== "number" && setClick(click.map((_, i) => i === 0));
     dispatch(filterTodos(fieldName));
   };
 
