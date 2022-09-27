@@ -13,13 +13,14 @@
   }
 
   &_inputGroup {
+    justify-content: center;
     margin-left: 1.5em;
   }
 
   &_modal {
     color: rgb(255, 255, 255) !important;
     background: rgba(238, 37, 37, 0.793) !important;
-    margin-right: 3%;
+    margin-right: auto;
   }
 
   &_modal:hover {
@@ -34,5 +35,22 @@
     padding-bottom: 0.5rem;
     box-shadow: 2px 4px 6px rgb(88, 8, 8);
     text-shadow: 2px 4px 6px rgb(88, 8, 8);
+  }
+}
+
+
+@media screen and (max-width: 400px) {
+  .todoHeader {
+    height: 5.2rem;
+    width: 22rem;
+
+    &_input {
+      width: 12em;
+      height: 2.3em;
+    }
+
+    &_modal {
+      height: 2.3em;
+    }
   }
 }
