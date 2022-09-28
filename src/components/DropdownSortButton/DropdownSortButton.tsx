@@ -1,13 +1,15 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { sortTodosBy } from "../../store/reducers/UserSlice";
 import Dropdown from "react-bootstrap/Dropdown";
+import { useAppSelector } from "../../hooks/hooks";
 import { SortOptions } from "../../models/Enums";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import s from "./DropdownSortButton.module.scss";
 
 const DropdownSortButton: FC = () => {
   const dispatch = useAppDispatch();
+  const todos = useAppSelector((state) => state.todos.todos);
 
   const handleClick = (sortDate: string): void => {
     dispatch(sortTodosBy(sortDate));
@@ -15,9 +17,9 @@ const DropdownSortButton: FC = () => {
 
   return (
     <DropdownButton className={s.todoDropdown_button} variant="danger" title="Sort" id="dropdown-basic-button">
-      <Dropdown.Item onClick={() => handleClick(SortOptions.message)}>By message</Dropdown.Item>
+      <Dropdown.Item onClick={() => handleClick(SortOptions.message)}>By message↓</Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item onClick={() => handleClick(SortOptions.date)}>By time</Dropdown.Item>
+      <Dropdown.Item onClick={() => handleClick(SortOptions.date)}>By exp time↓</Dropdown.Item>
     </DropdownButton>
   );
 };
