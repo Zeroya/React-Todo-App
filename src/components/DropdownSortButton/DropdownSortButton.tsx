@@ -2,14 +2,12 @@ import React, { FC } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { sortTodosBy } from "../../store/reducers/UserSlice";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useAppSelector } from "../../hooks/hooks";
 import { SortOptions } from "../../models/Enums";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import s from "./DropdownSortButton.module.scss";
 
 const DropdownSortButton: FC = () => {
   const dispatch = useAppDispatch();
-  const todos = useAppSelector((state) => state.todos.todos);
 
   const handleClick = (sortDate: string): void => {
     dispatch(sortTodosBy(sortDate));
