@@ -80,13 +80,13 @@ export const counterSlice = createSlice({
         (state.filtValue = action.payload);
     },
     sortTodosBy: (state, action: PayloadAction<string>) => {
-      SortOptions.message === action.payload &&
+      !SortOptions.message.localeCompare(action.payload) &&
         (state.todos = state.todos.sort((a: ITodo, b: ITodo) => (a.message > b.message ? 1 : -1)));
-      SortOptions.date === action.payload &&
+      !SortOptions.date.localeCompare(action.payload) &&
         (state.todos = state.todos.sort((a: ITodo, b: ITodo) => {
           let dateA = new Date(getCreationModalDate(a.dateExpiration)).getTime();
           let dateB = new Date(getCreationModalDate(b.dateExpiration)).getTime();
-          return dateA > dateB ? 1 : -1;
+          return dateA - dateB;
         }));
     },
   },
