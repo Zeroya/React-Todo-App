@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { addTodo, checker } from "../../store/reducers/UserSlice";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import DropdownSortButton from "../DropdownSortButton/DropdownSortButton";
+import AccordionSearch from "../AccordionSearch/AccordionSearch";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Сondition } from "../../models/Enums";
 import s from "./TodoHeader.module.scss";
@@ -17,7 +18,7 @@ const TodoHeader: FC = () => {
     if (input.trim()) {
       dispatch(addTodo(input));
       setInput("");
-      if (!filtValue.localeCompare(Сondition.active) || !filtValue.localeCompare(Сondition.completed)) {
+      if (filtValue === Сondition.active || filtValue === Сondition.completed) {
         dispatch(checker());
       }
     }
@@ -46,6 +47,7 @@ const TodoHeader: FC = () => {
           </InputGroup.Text>
         </InputGroup>
       </form>
+      <AccordionSearch />
     </div>
   );
 };

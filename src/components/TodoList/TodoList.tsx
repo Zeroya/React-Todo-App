@@ -8,6 +8,7 @@ import s from "./TodoList.module.scss";
 const TodoList: FC = () => {
   const todos = useAppSelector((state) => state.todos.todos);
   const filtValue = useAppSelector((state) => state.todos.filtValue);
+  const searchedValue = useAppSelector((state) => state.todos.searchValue);
 
   const todoBlock = todos
     .filter((todo: ITodo) =>
@@ -17,6 +18,9 @@ const TodoList: FC = () => {
         ? todo.completed
         : todo
     )
+    .filter((el: ITodo) => {
+      return searchedValue ? el.message.toLowerCase().includes(searchedValue.toLowerCase()) : el;
+    })
     .map((todo: ITodo) => {
       return <TodoItem key={todo.id} {...todo} />;
     });

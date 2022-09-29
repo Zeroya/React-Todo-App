@@ -15,12 +15,14 @@ interface CounterState {
   todos: ITodo[];
   filtValue: string;
   checker: boolean;
+  searchValue: string;
 }
 
 const initialState: CounterState = {
   todos: [],
   filtValue: Сondition.all,
   checker: false,
+  searchValue: "",
 };
 
 export const counterSlice = createSlice({
@@ -89,9 +91,21 @@ export const counterSlice = createSlice({
           return dateA - dateB;
         }));
     },
+    addSearchValue: (state, action: PayloadAction<string>) => {
+      state.searchValue = action.payload;
+    },
   },
 });
 
-export const { addTodo, addModalTodo, completeTodo, deleteTodo, updateTodo, filterTodos, checker, sortTodosBy } =
-  counterSlice.actions;
+export const {
+  addTodo,
+  addModalTodo,
+  completeTodo,
+  deleteTodo,
+  updateTodo,
+  filterTodos,
+  checker,
+  sortTodosBy,
+  addSearchValue,
+} = counterSlice.actions;
 export default counterSlice.reducer;

@@ -1,0 +1,34 @@
+.Accordion {
+  margin: 5% 20% 0 20%;
+
+  &_item button {
+    background: rgba(192, 139, 139, 0.756) !important;
+    color: black !important;
+    height: 20px;
+
+    &:hover {
+      background: rgba(189, 113, 113, 0.86) !important;
+    }
+  }
+
+  & div {
+    padding: 2px 0 2px 0;
+  }
+
+  &_input {
+    width: 15em;
+    height: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .Accordion {
+    margin: 3% 25% 0 25%;
+
+    &_input {
+      width: 10em;
+    }
+  }
+}
