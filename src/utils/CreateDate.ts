@@ -23,7 +23,15 @@ export const getCreationInputDateExpiration = (): string => {
       .split("")
       .map((el) => (el === "/" ? "." : el))
       .map((el, i, arr) =>
-        i === 0 && arr[i + 1] === "." ? Number(el) + 1 : i === 1 && arr[i + 1] === "." ? Number(el) + 1 : el
+        i === 0 && arr[i + 1] === "."
+          ? Number(el) + 1
+          : i === 0 && arr[i + 2] === "." && arr[i + 1] === "9"
+          ? Number(el) + 1
+          : i === 1 && arr[i + 1] === "." && arr[i] === "9"
+          ? 0
+          : i === 1 && arr[i + 1] === "."
+          ? Number(el) + 1
+          : el
       )
       .join("") +
     " " +
