@@ -3,3 +3,8 @@ export enum Сondition {
   completed = "completed",
   all = "all",
 }
+
+export enum SortOptions {
+  message = "message",
+  date = "date",
+}

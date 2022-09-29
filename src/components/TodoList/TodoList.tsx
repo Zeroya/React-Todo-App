@@ -11,7 +11,11 @@ const TodoList: FC = () => {
 
   const todoBlock = todos
     .filter((todo: ITodo) =>
-      filtValue === Сondition.active ? !todo.completed : filtValue === Сondition.completed ? todo.completed : todo
+      !filtValue.localeCompare(Сondition.active)
+        ? !todo.completed
+        : !filtValue.localeCompare(Сondition.completed)
+        ? todo.completed
+        : todo
     )
     .map((todo: ITodo) => {
       return <TodoItem key={todo.id} {...todo} />;
@@ -24,7 +28,9 @@ const TodoList: FC = () => {
         <h1>Todo List</h1>
       </div>
       <div className={s.todoList_scrollBox}>
-        {filtValue === Сondition.completed && !todoBlock.length && <p>there is nothing here, add first...</p>}
+        {!filtValue.localeCompare(Сondition.completed) && !todoBlock.length && (
+          <p>there is nothing here, add first...</p>
+        )}
         <ul>{todoBlock}</ul>
       </div>
     </div>

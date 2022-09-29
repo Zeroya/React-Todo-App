@@ -35,7 +35,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
     ) {
       if (!type) {
         dispatch(addModalTodo(input));
-        if (filtValue === Сondition.active || filtValue === Сondition.completed) {
+        if (!filtValue.localeCompare(Сondition.active) || !filtValue.localeCompare(Сondition.completed)) {
           dispatch(checker());
         }
         setInput({ message: "", date: "", expDate: "", idd: "" });
