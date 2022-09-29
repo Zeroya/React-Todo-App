@@ -81,7 +81,7 @@ export const counterSlice = createSlice({
     },
     sortTodosBy: (state, action: PayloadAction<string>) => {
       !SortOptions.message.localeCompare(action.payload) &&
-        (state.todos = state.todos.sort((a: ITodo, b: ITodo) => (a.message > b.message ? 1 : -1)));
+        (state.todos = state.todos.sort((a: ITodo, b: ITodo) => a.message.localeCompare(b.message)));
       !SortOptions.date.localeCompare(action.payload) &&
         (state.todos = state.todos.sort((a: ITodo, b: ITodo) => {
           let dateA = new Date(getCreationModalDate(a.dateExpiration)).getTime();
