@@ -8,23 +8,30 @@ import s from "./DropdownSortButton.module.scss";
 
 const DropdownSortButton: FC = () => {
   const [save, setSave] = useState("");
+  const [switcher, setSwitcher] = useState(false);
   const todos = useAppSelector((state) => state.todos.todos);
   const dispatch = useAppDispatch();
 
   const handleClick = (sortDate: string): void => {
+    sortDate === SortOptions.date ? setSwitcher(!switcher) : setSwitcher(false);
     dispatch(sortTodosBy(sortDate));
     setSave(sortDate);
   };
 
   useEffect(() => {
     handleClick(save);
+    return () => handleClick(SortOptions.message);
   }, [todos.length]);
 
   return (
     <DropdownButton className={s.todoDropdown_button} variant="danger" title="Sort" id="dropdown-basic-button">
-      <Dropdown.Item onClick={() => handleClick(SortOptions.message)}>By message↓</Dropdown.Item>
+      <Dropdown.Item active={!switcher} onClick={() => handleClick(SortOptions.message)}>
+        By message↓
+      </Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item onClick={() => handleClick(SortOptions.date)}>By exp time↓</Dropdown.Item>
+      <Dropdown.Item active={switcher} onClick={() => handleClick(SortOptions.date)}>
+        By exp time↓
+      </Dropdown.Item>
     </DropdownButton>
   );
 };
