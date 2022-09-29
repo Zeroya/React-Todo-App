@@ -22,7 +22,7 @@ const TodoHeader: FC = () => {
       }
     }
   };
-  console.log(123);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setInput(e.target.value);
   };
