@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, ChangeEvent, useState, useEffect } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import { addSearchValue } from "../../store/reducers/UserSlice";
 import { useAppDispatch } from "../../hooks/hooks";
@@ -8,7 +8,7 @@ const AccordionSearch: FC = () => {
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
   };
 
