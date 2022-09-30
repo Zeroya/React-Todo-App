@@ -3,8 +3,13 @@
 # dependencies
 /node_modules
 /.pnp
-/.vscode
 .pnp.js
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
 
 
 # testing
@@ -24,9 +29,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
