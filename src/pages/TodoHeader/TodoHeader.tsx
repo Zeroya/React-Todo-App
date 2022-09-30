@@ -1,9 +1,9 @@
 import React, { FC, useState, FormEvent, ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { addTodo, checker } from "../../store/reducers/UserSlice";
-import ModalWindow from "../ModalWindow/ModalWindow";
-import DropdownSortButton from "../DropdownSortButton/DropdownSortButton";
-import AccordionSearch from "../AccordionSearch/AccordionSearch";
+import ModalWindow from "../../components/ModalWindow/ModalWindow";
+import DropdownSortButton from "../../components/DropdownSortButton/DropdownSortButton";
+import AccordionSearch from "../../components/AccordionSearch/AccordionSearch";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Сondition } from "../../models/Enums";
 import s from "./TodoHeader.module.scss";

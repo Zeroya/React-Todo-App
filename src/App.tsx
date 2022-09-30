@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import TodoHeader from "./components/TodoHeader/TodoHeader";
-import TodoList from "./components/TodoList/TodoList";
+import TodoHeader from "./pages/TodoHeader/TodoHeader";
+import TodoList from "./pages/TodoList/TodoList";
 import "./App.css";
 import TodoButtons from "./components/TodoButtons/TodoButtons";
 

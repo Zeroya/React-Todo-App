@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useAppSelector } from "../../hooks/hooks";
 import { ITodo } from "../../models/ITodo";
 import { Сondition } from "../../models/Enums";
-import TodoItem from "../TodoItem/TodoItem";
+import TodoItem from "../../components/TodoItem/TodoItem";
 import s from "./TodoList.module.scss";
 
 const TodoList: FC = () => {
