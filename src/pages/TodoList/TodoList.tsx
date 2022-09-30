@@ -19,7 +19,7 @@ const TodoList: FC = () => {
         : todo
     )
     .filter((el: ITodo) => {
-      return searchedValue ? el.message.toLowerCase().includes(searchedValue.toLowerCase()) : el;
+      return searchedValue.trim() ? el.message.toLowerCase().includes(searchedValue.trim().toLowerCase()) : el;
     })
     .map((todo: ITodo) => {
       return <TodoItem key={todo.id} {...todo} />;
