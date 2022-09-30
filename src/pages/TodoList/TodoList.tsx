@@ -12,7 +12,7 @@ const TodoList: FC = () => {
 
   const todoBlock = todos
     .filter((todo: ITodo) =>
-      !filtValue.localeCompare(Сondition.active)
+      !filtValue?.localeCompare(Сondition.active)
         ? !todo.completed
         : !filtValue.localeCompare(Сondition.completed)
         ? todo.completed

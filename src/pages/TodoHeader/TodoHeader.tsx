@@ -18,7 +18,7 @@ const TodoHeader: FC = () => {
     if (input.trim()) {
       dispatch(addTodo(input));
       setInput("");
-      if (!filtValue.localeCompare(Сondition.active) || !filtValue.localeCompare(Сondition.completed)) {
+      if (!filtValue?.localeCompare(Сondition.active) || !filtValue?.localeCompare(Сondition.completed)) {
         dispatch(checker());
       }
     }
