@@ -10,6 +10,7 @@ import s from "./TodoHeader.module.scss";
 
 const TodoHeader: FC = () => {
   const filtValue = useAppSelector((state) => state.todos.filtValue);
+
   const dispatch = useAppDispatch();
   const [input, setInput] = useState("");
 

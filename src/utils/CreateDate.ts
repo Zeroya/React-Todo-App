@@ -27,10 +27,18 @@ export const getCreationInputDateExpiration = (): string => {
           ? Number(el) + 1
           : i === 0 && arr[i + 2] === "." && arr[i + 1] === "9"
           ? Number(el) + 1
+          : i === 0 && el === "3" && arr[i + 1] === "0"
+          ? 0
+          : i === 1 && el === "0" && arr[i - 1] === "3"
+          ? 1
           : i === 1 && arr[i + 1] === "." && arr[i] === "9"
           ? 0
           : i === 1 && arr[i + 1] === "."
           ? Number(el) + 1
+          : i === 3 && arr[0] === "3" && arr[1] === "0" && arr[i + 1] === "9"
+          ? 1
+          : i === 4 && arr[0] === "3" && arr[1] === "0" && arr[i] === "9"
+          ? 0
           : el
       )
       .join("") +
@@ -68,7 +76,23 @@ export const getCreationStoredDateExpiration = (): string => {
       .toLocaleDateString()
       .split("")
       .map((el, i, arr) =>
-        i === 0 && arr[i + 1] === "." ? Number(el) + 1 : i === 1 && arr[i + 1] === "." ? Number(el) + 1 : el
+        i === 0 && arr[i + 1] === "."
+          ? Number(el) + 1
+          : i === 0 && arr[i + 2] === "." && arr[i + 1] === "9"
+          ? Number(el) + 1
+          : i === 0 && el === "3" && arr[i + 1] === "0"
+          ? 0
+          : i === 1 && el === "0" && arr[i - 1] === "3"
+          ? 1
+          : i === 1 && arr[i + 1] === "." && arr[i] === "9"
+          ? 0
+          : i === 1 && arr[i + 1] === "."
+          ? Number(el) + 1
+          : i === 3 && arr[0] === "3" && arr[1] === "0" && arr[i + 1] === "9"
+          ? 1
+          : i === 4 && arr[0] === "3" && arr[1] === "0" && arr[i] === "9"
+          ? 0
+          : el
       )
       .map((el) => (el === "/" ? "-" : el === "." ? "-" : el))
       .join("")

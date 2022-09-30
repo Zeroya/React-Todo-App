@@ -25,7 +25,6 @@ const TodoList: FC = () => {
       return <TodoItem key={todo.id} {...todo} />;
     });
 
-  console.log(todos.length);
   return (
     <div className={s.todoList}>
       <div>
