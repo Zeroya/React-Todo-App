@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useAppSelector } from "../../hooks/hooks";
 import { ITodo } from "../../models/ITodo";
 import { Сondition } from "../../models/Enums";
-import TodoItem from "../TodoItem/TodoItem";
+import TodoItem from "../../components/TodoItem/TodoItem";
 import s from "./TodoList.module.scss";
 
 const TodoList: FC = () => {
@@ -12,14 +12,14 @@ const TodoList: FC = () => {
 
   const todoBlock = todos
     .filter((todo: ITodo) =>
-      !filtValue.localeCompare(Сondition.active)
+      !filtValue?.localeCompare(Сondition.active)
         ? !todo.completed
         : !filtValue.localeCompare(Сondition.completed)
         ? todo.completed
         : todo
     )
     .filter((el: ITodo) => {
-      return searchedValue ? el.message.toLowerCase().includes(searchedValue.toLowerCase()) : el;
+      return searchedValue.trim() ? el.message.toLowerCase().includes(searchedValue.trim().toLowerCase()) : el;
     })
     .map((todo: ITodo) => {
       return <TodoItem key={todo.id} {...todo} />;
