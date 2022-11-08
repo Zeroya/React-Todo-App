@@ -1,8 +1,17 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
+import * as path from "path";
+import express from "express";
+
 dotenv.config();
-import express from 'express';
 
 const app = express();
 const PORT = process.env.PORT || 3003;
 
-app.listen(PORT, () => { console.log(`all right  ${PORT}`) });
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../frontend/build"));
+  app.get("*", (req, res) => res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html")));
+}
+
+app.listen(PORT, () => {
+  console.log(`all right  ${PORT}`);
+});
