@@ -1,17 +1,21 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import * as path from "path";
+const cors = require("cors");
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3003;
 
+app.use(cors());
+
 const __dirname = path.resolve();
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
-  app.get("*", (req, res) => res.sendFile("index.html", { root: path.join(__dirname, "../frontend/build/") }));
+  app.get("*", (req, res) => res.sendFile("../frontend/build/index.html", { root: __dirname }));
+  //app.get("*", (req, res) => res.sendFile("index.html", { root: path.join(__dirname, "../frontend/build/") }));
 }
 
 app.get("/", (req, res) => {
