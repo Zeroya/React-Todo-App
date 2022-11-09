@@ -1,7 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import * as path from "path";
-const cors = require("cors");
+import cors from "cors";
 
 dotenv.config();
 
