@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import axios from "axios";
+import { fetchTodos } from "../../api/todoApi";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { ITodo } from "../../models/ITodo";
 import { addMongoTodos } from "../../store/reducers/UserSlice";
@@ -14,17 +14,12 @@ const TodoList: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const fetchTodos = () => {
-    axios
-      .get(`https://mern-todo-app-a66w.onrender.com/`)
+  useEffect(() => {
+    fetchTodos()
       .then((response) => dispatch(addMongoTodos(response.data)))
       .catch((err) => {
         console.log("Err: ", err);
       });
-  };
-
-  useEffect(() => {
-    fetchTodos();
   }, []);
 
   const todoBlock = todos

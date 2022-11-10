@@ -95,7 +95,8 @@ export const counterSlice = createSlice({
       state.searchValue = action.payload;
     },
     addMongoTodos: (state, action: PayloadAction<ITodo[]>) => {
-      state.todos.push(...action.payload);
+      !state.todos.some((el) => action.payload.some((elem) => elem.id === el.id)) &&
+        state.todos.push(...action.payload);
     },
   },
 });
