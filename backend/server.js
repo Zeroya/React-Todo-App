@@ -1,6 +1,9 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import * as path from "path";
+import todoRoutes from "./routes/todos.js";
+import mongoose from "mongoose";
+import cors from "cors";
 
 dotenv.config();
 
@@ -13,6 +16,16 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 }
 
-app.listen(PORT, () => {
-  console.log(`all right ${PORT}`);
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use("/", todoRoutes);
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`all right ${PORT}`);
+    });
+  })
+  .catch((error) => console.log(error));

@@ -94,6 +94,9 @@ export const counterSlice = createSlice({
     addSearchValue: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
     },
+    addMongoTodos: (state, action: PayloadAction<ITodo[]>) => {
+      state.todos.push(...action.payload);
+    },
   },
 });
 
@@ -107,5 +110,6 @@ export const {
   checker,
   sortTodosBy,
   addSearchValue,
+  addMongoTodos,
 } = counterSlice.actions;
 export default counterSlice.reducer;
