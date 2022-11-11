@@ -1,6 +1,8 @@
-import { FC } from "react";
-import { useAppSelector } from "../../hooks/hooks";
+import React, { FC, useEffect } from "react";
+import { fetchTodos } from "../../api/todoApi";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { ITodo } from "../../models/ITodo";
+import { addMongoTodos } from "../../store/reducers/UserSlice";
 import { Сondition } from "../../models/Enums";
 import TodoItem from "../../components/TodoItem/TodoItem";
 import s from "./TodoList.module.scss";
@@ -9,6 +11,16 @@ const TodoList: FC = () => {
   const todos = useAppSelector((state) => state.todos.todos);
   const filtValue = useAppSelector((state) => state.todos.filtValue);
   const searchedValue = useAppSelector((state) => state.todos.searchValue);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    fetchTodos()
+      .then((response) => dispatch(addMongoTodos(response.data)))
+      .catch((err) => {
+        console.log("Err: ", err);
+      });
+  }, []);
 
   const todoBlock = todos
     .filter((todo: ITodo) =>
