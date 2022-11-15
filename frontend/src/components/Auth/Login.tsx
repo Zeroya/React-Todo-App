@@ -1,4 +1,4 @@
-import React, { FC, useState, ChangeEvent, MouseEvent } from "react";
+import React, { FC, useState, ChangeEvent, MouseEvent, useEffect } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { addjwtToken } from "../../store/reducers/UserSlice";
 import { loginUser } from "../../api/todoApi";
@@ -29,6 +29,9 @@ const Login: FC = () => {
   const loginHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
+      if (!form.userName || !form.password) {
+        return;
+      }
       await loginUser(form).then((response) => getToken(response.data.token, response.data.user.userId));
     } catch (error) {
       console.error(error);
@@ -39,6 +42,10 @@ const Login: FC = () => {
       password: "",
     });
   };
+
+  useEffect(() => {
+    setTimeout(() => setErrorArr(null), 2000);
+  }, [errorArr]);
 
   return (
     <>

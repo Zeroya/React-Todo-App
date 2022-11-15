@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { useAppSelector } from "./hooks/hooks";
 import { useRoutes } from "./hooks/routes";
 import "./App.css";
