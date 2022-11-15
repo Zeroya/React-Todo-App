@@ -30,3 +30,8 @@ export interface IChange {
   expDate?: string;
   idd?: string;
 }
+
+export interface IUser {
+  userName: string;
+  password: string;
+}

@@ -1,10 +1,10 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { fetchTodos } from "../../api/todoApi";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { ITodo } from "../../models/ITodo";
 import { addMongoTodos } from "../../store/reducers/UserSlice";
 import { Сondition } from "../../models/Enums";
-import TodoItem from "../../components/TodoItem/TodoItem";
+import TodoItem from "../TodoItem/TodoItem";
 import s from "./TodoList.module.scss";
 
 const TodoList: FC = () => {
@@ -14,15 +14,20 @@ const TodoList: FC = () => {
 
   const dispatch = useAppDispatch();
 
+  const getStaticTodos = async () => {
+    try {
+      const response = await fetchTodos();
+      dispatch(addMongoTodos(response.data));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    fetchTodos()
-      .then((response) => dispatch(addMongoTodos(response.data)))
-      .catch((err) => {
-        console.log("Err: ", err);
-      });
+    getStaticTodos();
   }, []);
 
-  const todoBlock = todos
+  let todoBlock = todos
     .filter((todo: ITodo) =>
       !filtValue?.localeCompare(Сondition.active)
         ? !todo.completed
@@ -36,6 +41,8 @@ const TodoList: FC = () => {
     .map((todo: ITodo) => {
       return <TodoItem key={todo.id} {...todo} />;
     });
+
+  todoBlock = useMemo(() => todoBlock, [todoBlock]);
 
   return (
     <div className={s.todoList}>

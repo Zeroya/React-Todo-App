@@ -1,10 +1,10 @@
 import express from "express";
-import TodoModel from "../models/todoModel.js";
+import Todos from "../models/todoModal.js";
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  TodoModel.find({})
+  Todos.find({})
     .then((items) => {
       res.json(items);
     })

@@ -1,0 +1,13 @@
+@import "../../styles/variables.scss";
+
+.navBar {
+  width: 100%;
+  background: rgba(192, 139, 139, 0.756);
+  padding: 0.4em;
+
+  &__container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}

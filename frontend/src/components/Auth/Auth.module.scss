@@ -1,0 +1,148 @@
+@import "../../styles/variables.scss";
+
+.authBlock {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 45%;
+  background: linear-gradient($gradient1, $gradient2);
+  font-family: "Roboto", sans-serif;
+  font-size: 0;
+  padding: 0 15px;
+  border: 1px solid $authBorder;
+  border-radius: 15px;
+  box-shadow: 0 0 20px $authShadow;
+
+  &__formIcon {
+    color: $iconColor;
+    font-size: 13px;
+    text-align: center;
+    text-shadow: 0 0 20px $authShadow;
+    width: 50%;
+    padding: 70px 0;
+    vertical-align: top;
+    display: inline-block;
+
+    & i {
+      font-size: 124px;
+      margin: 0 0 15px;
+      display: block;
+    }
+  }
+
+  &__signup a {
+    color: $iconColor;
+    text-transform: capitalize;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      text-decoration: underline;
+      color: black;
+    }
+  }
+}
+
+.authForm {
+  background: $formrBg;
+  width: 50%;
+  padding: 60px 30px;
+  margin: -10px 0;
+  border-radius: 15px;
+  box-shadow: 0 0 20px $authShadow;
+  display: inline-block;
+
+  &__title {
+    color: $titleColor;
+    font-size: 23px;
+    font-weight: 900;
+    text-align: center;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    margin: 0 0 30px 0;
+  }
+
+  &__formGroup {
+    background-color: $groupBg;
+    margin: 0 0 15px;
+    border: 1px solid $groupBorder;
+    border-radius: 20px;
+  }
+
+  &__inputIcon {
+    color: $groupBorder;
+    font-size: 15px;
+    text-align: center;
+    line-height: 38px;
+    height: 35px;
+    width: 40px;
+    vertical-align: top;
+    display: inline-block;
+  }
+
+  &__formControl {
+    color: $groupBorder;
+    background-color: transparent;
+    font-size: 14px;
+    letter-spacing: 1px;
+    width: calc(100% - 55px);
+    height: 33px;
+    padding: 2px 10px 0 0;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    display: inline-block;
+    transition: all 0.3s;
+
+    &:focus {
+      box-shadow: none;
+      border: none;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $groupBorder;
+      font-size: 13px;
+      text-transform: capitalize;
+    }
+  }
+
+  &__btn {
+    color: $btnColor;
+    background: $gradient1;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+    margin: 0 0 10px 0;
+    border: none;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+
+    &:hover,
+    &:focus {
+      color: $iconColor;
+      background-color: $gradient2;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .authBlock {
+    padding-bottom: 15px;
+
+    &__formIcon {
+      width: 100%;
+      padding: 20px 0;
+    }
+  }
+
+  .authForm {
+    width: 100%;
+    margin: 0;
+  }
+}

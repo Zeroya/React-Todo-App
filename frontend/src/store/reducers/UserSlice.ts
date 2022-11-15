@@ -16,6 +16,7 @@ interface CounterState {
   filtValue: string;
   checker: boolean;
   searchValue: string;
+  jwtToken: string;
 }
 
 const initialState: CounterState = {
@@ -23,6 +24,7 @@ const initialState: CounterState = {
   filtValue: Сondition.all,
   checker: false,
   searchValue: "",
+  jwtToken: "",
 };
 
 export const counterSlice = createSlice({
@@ -98,6 +100,12 @@ export const counterSlice = createSlice({
       !state.todos.some((el) => action.payload.some((elem) => elem.id === el.id)) &&
         state.todos.push(...action.payload);
     },
+    addjwtToken: (state, action: PayloadAction<string>) => {
+      state.jwtToken = action.payload;
+    },
+    removejwtToken: (state) => {
+      state.jwtToken = "";
+    },
   },
 });
 
@@ -112,5 +120,7 @@ export const {
   sortTodosBy,
   addSearchValue,
   addMongoTodos,
+  addjwtToken,
+  removejwtToken,
 } = counterSlice.actions;
 export default counterSlice.reducer;
