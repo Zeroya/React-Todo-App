@@ -16,6 +16,7 @@ const Login: FC = () => {
     userName: "",
     password: "",
   });
+  const [checker, setChecker] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,11 +30,14 @@ const Login: FC = () => {
   const loginHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      if (!form.userName || !form.password) {
+      if (!form.userName && !form.password) {
         return;
       }
+      setChecker(true);
       await loginUser(form).then((response) => getToken(response.data.token, response.data.user.userId));
+      setChecker(false);
     } catch (error) {
+      setChecker(false);
       console.error(error);
       setErrorArr(error);
     }
@@ -89,7 +93,7 @@ const Login: FC = () => {
                       name="password"
                     />
                   </div>
-                  <button className={s.authForm__btn} onClick={loginHandler}>
+                  <button className={s.authForm__btn} onClick={loginHandler} disabled={checker}>
                     Login
                   </button>
                 </form>
