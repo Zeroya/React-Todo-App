@@ -14,6 +14,6 @@ const todoSchema = new Schema(
   { timestamps: true }
 );
 
-const TodoModal = mongoose.model("todoModal", todoSchema);
+const Todo = mongoose.model("todo", todoSchema);
 
-export default TodoModal;
+export default Todo;

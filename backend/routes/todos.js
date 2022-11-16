@@ -1,16 +1,8 @@
 import express from "express";
-import TodoModel from "../models/todoModel.js";
+import { getTodos } from "../controllers/todosController.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  TodoModel.find({})
-    .then((items) => {
-      res.json(items);
-    })
-    .catch((err) => {
-      console.log("Error", err);
-    });
-});
+router.get("/", getTodos);
 
 export default router;

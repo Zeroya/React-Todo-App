@@ -1,5 +1,5 @@
 .todoHeader {
-  margin-top: 2%;
+  margin-top: 1%;
   background: rgb(175, 26, 26);
   box-shadow: 2px 4px 6px rgb(189, 2, 2);
   height: 8rem;
@@ -27,7 +27,6 @@
     background: rgb(118, 19, 19) !important;
   }
 
-
   h1 {
     background: rgba(175, 26, 26, 0.918);
     margin: 0;
@@ -37,7 +36,6 @@
     text-shadow: 2px 4px 6px rgb(88, 8, 8);
   }
 }
-
 
 @media screen and (max-width: 400px) {
   .todoHeader {

@@ -1,16 +1,16 @@
 import React, { FC } from "react";
-import TodoHeader from "./pages/TodoHeader/TodoHeader";
-import TodoList from "./pages/TodoList/TodoList";
+import { HashRouter as Router } from "react-router-dom";
+import { useAppSelector } from "./hooks/hooks";
+import { useRoutes } from "./hooks/routes";
 import "./App.css";
-import TodoButtons from "./pages/TodoButtons/TodoButtons";
 
 const App: FC = () => {
+  const jwtToken = useAppSelector((state) => state.todos.jwtToken);
+  const routes = useRoutes(!!jwtToken);
   return (
-    <div className="App">
-      <TodoHeader />
-      <TodoList />
-      <TodoButtons />
-    </div>
+    <Router>
+      <div className="App">{routes}</div>
+    </Router>
   );
 };
 
