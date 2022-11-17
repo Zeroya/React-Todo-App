@@ -1,8 +1,20 @@
 import axios from "axios";
-import { IUser } from "../models/ITodo";
+import { IMongoTodo, IUser } from "../models/ITodo";
 
 const fetchTodos = () => {
-  return axios.get(`https://mern-todo-app-a66w.onrender.com/`);
+  return axios.get(`https://mern-todo-app-a66w.onrender.com/todo`);
+};
+
+const addTodoDB = (form: IMongoTodo) => {
+  return axios.post(
+    "https://mern-todo-app-a66w.onrender.com/todo/add",
+    { ...form },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
 
 const loginUser = (form: IUser) => {
@@ -17,4 +29,4 @@ const loginUser = (form: IUser) => {
   );
 };
 
-export { fetchTodos, loginUser };
+export { fetchTodos, loginUser, addTodoDB };

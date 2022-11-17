@@ -5,15 +5,15 @@ import { useAppDispatch } from "../../hooks/hooks";
 import s from "./TodoItem.module.scss";
 import ModalWindow from "../ModalWindow/ModalWindow";
 
-const TodoItem: FC<ITodo> = ({ id, message, date, dateExpiration, completed, dateStored }) => {
+const TodoItem: FC<ITodo> = ({ _id, message, date, dateExpiration, completed, dateStored }) => {
   const dispatch = useAppDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    dispatch(completeTodo(id));
+    dispatch(completeTodo(_id));
   };
 
   const handleDelete = (e: MouseEvent<HTMLSpanElement>): void => {
-    dispatch(deleteTodo(id));
+    dispatch(deleteTodo(_id));
   };
 
   const completeLogic = completed ? s.completed : "";
@@ -40,7 +40,7 @@ const TodoItem: FC<ITodo> = ({ id, message, date, dateExpiration, completed, dat
       </div>
       <div className={s.todoItem_changeField}>
         <span>
-          <ModalWindow type="chenge" message={message} date={dateStored.date} expDate={dateStored.expDate} idd={id} />
+          <ModalWindow type="chenge" message={message} date={dateStored.date} expDate={dateStored.expDate} idd={_id} />
         </span>
         <span onClick={handleDelete}>
           <i className="fa fa-times" aria-hidden="true"></i>

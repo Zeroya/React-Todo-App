@@ -32,40 +32,40 @@ export const counterSlice = createSlice({
 
   initialState,
   reducers: {
-    addTodo: (state, action: PayloadAction<string>) => {
-      state.todos.push({
-        id: uuidv4(),
-        message: action.payload,
-        completed: false,
-        date: getCreationInputDate(),
-        dateExpiration: getCreationInputDateExpiration(),
-        dateStored: {
-          date: getCreationStoredInputDate(),
-          expDate: getCreationStoredDateExpiration(),
-        },
-      });
-    },
-    addModalTodo: (state, action: PayloadAction<UserDate>) => {
-      const { message, date, expDate } = action.payload;
-      state.todos.push({
-        id: uuidv4(),
-        message,
-        completed: false,
-        date: getCreationModalDate(date),
-        dateExpiration: getCreationModalDate(expDate),
-        dateStored: { date, expDate },
-      });
-    },
+    // addTodo: (state, action: PayloadAction<string>) => {
+    //   state.todos.push({
+    //     id: uuidv4(),
+    //     message: action.payload,
+    //     completed: false,
+    //     date: getCreationInputDate(),
+    //     dateExpiration: getCreationInputDateExpiration(),
+    //     dateStored: {
+    //       date: getCreationStoredInputDate(),
+    //       expDate: getCreationStoredDateExpiration(),
+    //     },
+    //   });
+    // },
+    // addModalTodo: (state, action: PayloadAction<UserDate>) => {
+    //   const { message, date, expDate } = action.payload;
+    //   state.todos.push({
+    //     id: uuidv4(),
+    //     message,
+    //     completed: false,
+    //     date: getCreationModalDate(date),
+    //     dateExpiration: getCreationModalDate(expDate),
+    //     dateStored: { date, expDate },
+    //   });
+    // },
     completeTodo: (state, action: PayloadAction<string>) => {
-      state.todos.map((todo) => (todo.id === action.payload ? (todo.completed = !todo.completed) : todo));
+      state.todos.map((todo) => (todo._id === action.payload ? (todo.completed = !todo.completed) : todo));
     },
     deleteTodo: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      state.todos = state.todos.filter((todo) => todo._id !== action.payload);
     },
     updateTodo: (state, action: PayloadAction<TodoData>) => {
       const { message, date, expDate } = action.payload;
       state.todos = state.todos.map((todo) =>
-        todo.id === action.payload.idd
+        todo._id === action.payload.idd
           ? {
               ...todo,
               message,
@@ -97,8 +97,10 @@ export const counterSlice = createSlice({
       state.searchValue = action.payload;
     },
     addMongoTodos: (state, action: PayloadAction<ITodo[]>) => {
-      !state.todos.some((el) => action.payload.some((elem) => elem.id === el.id)) &&
-        state.todos.push(...action.payload);
+      state.todos = action.payload;
+    },
+    addNewMongoTodo: (state, action: PayloadAction<ITodo>) => {
+      state.todos.push(action.payload);
     },
     addjwtToken: (state, action: PayloadAction<string>) => {
       state.jwtToken = action.payload;
@@ -110,8 +112,8 @@ export const counterSlice = createSlice({
 });
 
 export const {
-  addTodo,
-  addModalTodo,
+  // addTodo,
+  // addModalTodo,
   completeTodo,
   deleteTodo,
   updateTodo,
@@ -120,6 +122,7 @@ export const {
   sortTodosBy,
   addSearchValue,
   addMongoTodos,
+  addNewMongoTodo,
   addjwtToken,
   removejwtToken,
 } = counterSlice.actions;

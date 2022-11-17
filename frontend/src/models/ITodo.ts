@@ -1,5 +1,5 @@
 export interface ITodo {
-  id: string;
+  _id: string;
   message: string;
   date: string;
   dateExpiration: string;
@@ -34,4 +34,16 @@ export interface IChange {
 export interface IUser {
   userName: string;
   password: string;
+}
+
+export interface IMongoTodo {
+  id?: string;
+  message: string;
+  date: string;
+  dateExpiration: string;
+  completed?: boolean;
+  dateStored: {
+    date: string;
+    expDate: string;
+  };
 }

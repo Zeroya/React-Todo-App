@@ -5,7 +5,9 @@ import Modal from "react-bootstrap/Modal";
 import { IChange, TodoData } from "../../models/ITodo";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { Сondition } from "../../models/Enums";
-import { addModalTodo, updateTodo, checker } from "../../store/reducers/UserSlice";
+import { updateTodo, checker, addNewMongoTodo } from "../../store/reducers/UserSlice";
+import { addTodoDB } from "../../api/todoApi";
+import { addModalInputTodo } from "../../utils/mongoHelper";
 import s from "./ModalWindow.module.scss";
 
 const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
@@ -23,6 +25,16 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
 
   const dispatch = useAppDispatch();
 
+  const addMongoTodo = async (message: string, date: string, expDate: string) => {
+    try {
+      await addTodoDB(addModalInputTodo(message, date, expDate)).then((response) =>
+        dispatch(addNewMongoTodo(response.data))
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (
@@ -34,7 +46,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
       /[0-9]+/.test(input.expDate)
     ) {
       if (!type) {
-        dispatch(addModalTodo(input));
+        addMongoTodo(input.message, input.date, input.expDate);
         if (!filtValue.localeCompare(Сondition.active) || !filtValue.localeCompare(Сondition.completed)) {
           dispatch(checker());
         }

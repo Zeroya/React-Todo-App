@@ -39,7 +39,7 @@ const TodoList: FC = () => {
       return searchedValue.trim() ? el.message.toLowerCase().includes(searchedValue.trim().toLowerCase()) : el;
     })
     .map((todo: ITodo) => {
-      return <TodoItem key={todo.id} {...todo} />;
+      return <TodoItem key={todo._id} {...todo} />;
     });
 
   todoBlock = useMemo(() => todoBlock, [todoBlock]);
