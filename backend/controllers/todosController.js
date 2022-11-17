@@ -1,6 +1,6 @@
 import Todos from "../models/todoModal.js";
 
-const getBindTodos = async (req, res) => {
+const getTodos = async (req, res) => {
   Todos.find({})
     .then((items) => {
       res.json(items);
@@ -10,7 +10,7 @@ const getBindTodos = async (req, res) => {
     });
 };
 
-const getTodo = async (req, res) => {
+const addTodo = async (req, res) => {
   try {
     const { message, date, dateExpiration, dateStored } = req.body;
 
@@ -29,4 +29,4 @@ const getTodo = async (req, res) => {
   }
 };
 
-export { getBindTodos, getTodo };
+export { getTodos, addTodo };

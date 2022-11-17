@@ -1,10 +1,10 @@
 import express from "express";
-import { getBindTodos, getTodo } from "../controllers/todosController.js";
+import { getTodos, addTodo } from "../controllers/todosController.js";
 
 const router = express.Router();
 
-router.get("/", getBindTodos);
+router.get("/", getTodos);
 
-router.post("/add", getTodo);
+router.post("/add", addTodo);
 
 export default router;
