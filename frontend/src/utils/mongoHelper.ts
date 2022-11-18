@@ -36,7 +36,7 @@ export const addSimpleFechedInputTodo = (input: sendTodo): ITodo => {
   };
 };
 
-export const fechedAllTodo = (input: sendTodo[]): any => {
+export const fechedAllTodo = (input: sendTodo[]): ITodo[] => {
   return input.map((el) => ({
     ...el,
     dateStored: {
