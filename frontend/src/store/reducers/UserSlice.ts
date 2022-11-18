@@ -32,30 +32,6 @@ export const counterSlice = createSlice({
 
   initialState,
   reducers: {
-    // addTodo: (state, action: PayloadAction<string>) => {
-    //   state.todos.push({
-    //     id: uuidv4(),
-    //     message: action.payload,
-    //     completed: false,
-    //     date: getCreationInputDate(),
-    //     dateExpiration: getCreationInputDateExpiration(),
-    //     dateStored: {
-    //       date: getCreationStoredInputDate(),
-    //       expDate: getCreationStoredDateExpiration(),
-    //     },
-    //   });
-    // },
-    // addModalTodo: (state, action: PayloadAction<UserDate>) => {
-    //   const { message, date, expDate } = action.payload;
-    //   state.todos.push({
-    //     id: uuidv4(),
-    //     message,
-    //     completed: false,
-    //     date: getCreationModalDate(date),
-    //     dateExpiration: getCreationModalDate(expDate),
-    //     dateStored: { date, expDate },
-    //   });
-    // },
     completeTodo: (state, action: PayloadAction<string>) => {
       state.todos.map((todo) => (todo._id === action.payload ? (todo.completed = !todo.completed) : todo));
     },
@@ -112,8 +88,6 @@ export const counterSlice = createSlice({
 });
 
 export const {
-  // addTodo,
-  // addModalTodo,
   completeTodo,
   deleteTodo,
   updateTodo,
