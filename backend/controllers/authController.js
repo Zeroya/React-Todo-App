@@ -19,7 +19,7 @@ const authLogin = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-    res.json({
+    res.status(201).json({
       token,
       user: {
         userId: user._id,

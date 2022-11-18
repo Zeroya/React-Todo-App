@@ -1,5 +1,6 @@
-import { IMongoTodo, TodoData } from "../models/ITodo";
+import { IMongoTodo, ITodo, sendTodo, TodoData } from "../models/ITodo";
 import {
+  getCreatedForm,
   getCreationInputDate,
   getCreationInputDateExpiration,
   getCreationModalDate,
@@ -12,10 +13,6 @@ export const addSimpleInputTodo = (message: string): IMongoTodo => {
     message,
     date: getCreationInputDate(),
     dateExpiration: getCreationInputDateExpiration(),
-    dateStored: {
-      date: getCreationStoredInputDate(),
-      expDate: getCreationStoredDateExpiration(),
-    },
   };
 };
 
@@ -25,6 +22,26 @@ export const addModalInputTodo = (input: TodoData): IMongoTodo => {
     message,
     date: getCreationModalDate(date),
     dateExpiration: getCreationModalDate(expDate),
-    dateStored: { date, expDate },
   };
+};
+
+export const addSimpleFechedInputTodo = (input: sendTodo): ITodo => {
+  const { date, dateExpiration } = input;
+  return {
+    ...input,
+    dateStored: {
+      date: getCreatedForm(date),
+      expDate: getCreatedForm(dateExpiration),
+    },
+  };
+};
+
+export const fechedAllTodo = (input: sendTodo[]): any => {
+  return input.map((el) => ({
+    ...el,
+    dateStored: {
+      date: getCreatedForm(el.date),
+      expDate: getCreatedForm(el.dateExpiration),
+    },
+  }));
 };

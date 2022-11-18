@@ -6,7 +6,7 @@ import DropdownSortButton from "../DropdownSortButton/DropdownSortButton";
 import AccordionSearch from "../AccordionSearch/AccordionSearch";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Сondition } from "../../models/Enums";
-import { addSimpleInputTodo } from "../../utils/mongoHelper";
+import { addSimpleFechedInputTodo, addSimpleInputTodo } from "../../utils/mongoHelper";
 import { addTodoDB } from "../../api/todoApi";
 import s from "./TodoHeader.module.scss";
 
@@ -19,7 +19,7 @@ const TodoHeader: FC = () => {
   const addMongoTodo = async (input: string) => {
     try {
       const response = await addTodoDB(addSimpleInputTodo(input));
-      dispatch(addNewMongoTodo(response.data));
+      dispatch(addNewMongoTodo(addSimpleFechedInputTodo(response.data)));
     } catch (error) {
       console.error(error);
     }

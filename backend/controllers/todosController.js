@@ -12,14 +12,13 @@ const getTodos = async (req, res) => {
 
 const addTodo = async (req, res) => {
   try {
-    const { message, date, dateExpiration, dateStored } = req.body;
+    const { message, date, dateExpiration } = req.body;
 
     const todo = await new Todos({
       message,
       date,
       dateExpiration,
       completed: false,
-      dateStored,
     });
 
     await todo.save();

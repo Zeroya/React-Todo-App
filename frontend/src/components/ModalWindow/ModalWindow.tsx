@@ -7,8 +7,9 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { Сondition } from "../../models/Enums";
 import { updateTodo, checker, addNewMongoTodo } from "../../store/reducers/UserSlice";
 import { addTodoDB } from "../../api/todoApi";
-import { addModalInputTodo } from "../../utils/mongoHelper";
+import { addSimpleFechedInputTodo, addModalInputTodo } from "../../utils/mongoHelper";
 import s from "./ModalWindow.module.scss";
+import { getCreatedForm } from "../../utils/CreateDate";
 
 const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
   const filtValue = useAppSelector((state) => state.todos.filtValue);
@@ -28,7 +29,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
   const addMongoTodo = async (input: TodoData) => {
     try {
       const response = await addTodoDB(addModalInputTodo(input));
-      dispatch(addNewMongoTodo(response.data));
+      dispatch(addNewMongoTodo(addSimpleFechedInputTodo(response.data)));
     } catch (error) {
       console.error(error);
     }

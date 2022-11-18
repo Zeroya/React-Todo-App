@@ -37,13 +37,21 @@ export interface IUser {
 }
 
 export interface IMongoTodo {
-  id?: string;
+  _id?: string;
   message: string;
   date: string;
   dateExpiration: string;
   completed?: boolean;
-  dateStored: {
+  dateStored?: {
     date: string;
     expDate: string;
   };
+}
+
+export interface sendTodo {
+  _id: string;
+  message: string;
+  date: string;
+  dateExpiration: string;
+  completed: boolean;
 }

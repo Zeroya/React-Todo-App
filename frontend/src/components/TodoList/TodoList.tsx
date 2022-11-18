@@ -6,6 +6,7 @@ import { addMongoTodos } from "../../store/reducers/UserSlice";
 import { Сondition } from "../../models/Enums";
 import TodoItem from "../TodoItem/TodoItem";
 import s from "./TodoList.module.scss";
+import { fechedAllTodo } from "../../utils/mongoHelper";
 
 const TodoList: FC = () => {
   const todos = useAppSelector((state) => state.todos.todos);
@@ -17,7 +18,7 @@ const TodoList: FC = () => {
   const getStaticTodos = async () => {
     try {
       const response = await fetchTodos();
-      dispatch(addMongoTodos(response.data));
+      dispatch(addMongoTodos(fechedAllTodo(response.data)));
     } catch (err) {
       console.error(err);
     }
