@@ -18,7 +18,8 @@ const TodoHeader: FC = () => {
 
   const addMongoTodo = async (input: string) => {
     try {
-      await addTodoDB(addSimpleInputTodo(input)).then((response) => dispatch(addNewMongoTodo(response.data)));
+      const response = await addTodoDB(addSimpleInputTodo(input));
+      dispatch(addNewMongoTodo(response.data));
     } catch (error) {
       console.error(error);
     }

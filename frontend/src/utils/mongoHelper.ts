@@ -19,7 +19,8 @@ export const addSimpleInputTodo = (message: string): IMongoTodo => {
   };
 };
 
-export const addModalInputTodo = (message: string, date: string, expDate: string): IMongoTodo => {
+export const addModalInputTodo = (input: TodoData): IMongoTodo => {
+  const { message, date, expDate } = input;
   return {
     message,
     date: getCreationModalDate(date),

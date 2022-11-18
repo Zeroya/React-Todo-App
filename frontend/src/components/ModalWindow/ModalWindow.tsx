@@ -25,11 +25,10 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
 
   const dispatch = useAppDispatch();
 
-  const addMongoTodo = async (message: string, date: string, expDate: string) => {
+  const addMongoTodo = async (input: TodoData) => {
     try {
-      await addTodoDB(addModalInputTodo(message, date, expDate)).then((response) =>
-        dispatch(addNewMongoTodo(response.data))
-      );
+      const response = await addTodoDB(addModalInputTodo(input));
+      dispatch(addNewMongoTodo(response.data));
     } catch (error) {
       console.error(error);
     }
@@ -46,7 +45,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
       /[0-9]+/.test(input.expDate)
     ) {
       if (!type) {
-        addMongoTodo(input.message, input.date, input.expDate);
+        addMongoTodo(input);
         if (!filtValue.localeCompare(Сondition.active) || !filtValue.localeCompare(Сondition.completed)) {
           dispatch(checker());
         }
