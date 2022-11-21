@@ -118,3 +118,25 @@ export const getCreationModalDate = (payload: string): string => {
     .concat(" ")
     .concat(payload.slice(11, 16));
 };
+
+export const getCreatedForm = (payload: string): string => {
+  const form = payload
+    .split("")
+    .map((el) => (el === "/" ? "-" : el === "." ? "-" : el))
+    .map((el) => (el === " " ? "T" : el))
+    .join("");
+  return (
+    form
+      .split("T")
+      .filter((el, i) => i === 0)
+      .join("")
+      .split("-")
+      .reverse()
+      .join("-") +
+    "T" +
+    form
+      .split("T")
+      .filter((el, i) => i === 1)
+      .join("")
+  );
+};

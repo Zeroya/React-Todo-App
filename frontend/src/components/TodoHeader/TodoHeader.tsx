@@ -1,11 +1,13 @@
 import React, { FC, useState, FormEvent, ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { addTodo, checker } from "../../store/reducers/UserSlice";
+import { addNewMongoTodo, checker } from "../../store/reducers/UserSlice";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import DropdownSortButton from "../DropdownSortButton/DropdownSortButton";
 import AccordionSearch from "../AccordionSearch/AccordionSearch";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Сondition } from "../../models/Enums";
+import { addSimpleFechedInputTodo, addSimpleInputTodo } from "../../utils/mongoHelper";
+import { addTodoDB } from "../../api/todoApi";
 import s from "./TodoHeader.module.scss";
 
 const TodoHeader: FC = () => {
@@ -14,10 +16,19 @@ const TodoHeader: FC = () => {
   const dispatch = useAppDispatch();
   const [input, setInput] = useState("");
 
+  const addMongoTodo = async (input: string) => {
+    try {
+      const response = await addTodoDB(addSimpleInputTodo(input));
+      dispatch(addNewMongoTodo(addSimpleFechedInputTodo(response.data)));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const submitValue = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (input.trim()) {
-      dispatch(addTodo(input));
+      addMongoTodo(input);
       setInput("");
       if (!filtValue?.localeCompare(Сondition.active) || !filtValue?.localeCompare(Сondition.completed)) {
         dispatch(checker());

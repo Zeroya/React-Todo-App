@@ -10,4 +10,22 @@ const getTodos = async (req, res) => {
     });
 };
 
-export { getTodos };
+const addTodo = async (req, res) => {
+  try {
+    const { message, date, dateExpiration } = req.body;
+
+    const todo = await new Todos({
+      message,
+      date,
+      dateExpiration,
+      completed: false,
+    });
+
+    await todo.save();
+    res.json(todo);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { getTodos, addTodo };

@@ -1,13 +1,14 @@
 import axios from "axios";
-import { IUser } from "../models/ITodo";
+import { BASE_URL } from "../constants/constants";
+import { IMongoTodo, IUser } from "../models/ITodo";
 
 const fetchTodos = () => {
-  return axios.get(`https://mern-todo-app-a66w.onrender.com/`);
+  return axios.get(BASE_URL + "/todo");
 };
 
-const loginUser = (form: IUser) => {
+const addTodoDB = (form: IMongoTodo) => {
   return axios.post(
-    "https://mern-todo-app-a66w.onrender.com/auth/login",
+    BASE_URL + "/todo/add",
     { ...form },
     {
       headers: {
@@ -17,4 +18,16 @@ const loginUser = (form: IUser) => {
   );
 };
 
-export { fetchTodos, loginUser };
+const loginUser = (form: IUser) => {
+  return axios.post(
+    BASE_URL + "/auth/login",
+    { ...form },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
+
+export { fetchTodos, loginUser, addTodoDB };
