@@ -2,12 +2,12 @@ import React, { FC, useState, useLayoutEffect, FormEvent, ChangeEvent } from "re
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { IChange, TodoData } from "../../models/ITodo";
+import { IChange, TodoData, UserDate } from "../../models/ITodo";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { Сondition } from "../../models/Enums";
 import { updateTodo, checker, addNewMongoTodo } from "../../store/reducers/UserSlice";
-import { addTodoDB } from "../../api/todoApi";
-import { addSimpleFechedInputTodo, addModalInputTodo } from "../../utils/mongoHelper";
+import { addTodoDB, updatedTodo } from "../../api/todoApi";
+import { addSimpleFechedInputTodo, addModalInputTodo, reformUpdatedTodo } from "../../utils/mongoHelper";
 import s from "./ModalWindow.module.scss";
 import { getCreatedForm } from "../../utils/CreateDate";
 
@@ -35,6 +35,15 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
     }
   };
 
+  const updateTodoDB = async (input: TodoData) => {
+    try {
+      await updatedTodo(reformUpdatedTodo(input));
+      dispatch(updateTodo(input));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (
@@ -53,7 +62,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
         setInput({ message: "", date: "", expDate: "", idd: "" });
         setShow(false);
       } else {
-        dispatch(updateTodo(input));
+        updateTodoDB(input);
         setShow(false);
       }
     }

@@ -28,4 +28,36 @@ const addTodo = async (req, res) => {
   }
 };
 
-export { getTodos, addTodo };
+const toggleTodoDone = async (req, res) => {
+  try {
+    const todoRef = await Todos.findById(req.params.id);
+
+    const todo = await Todos.findOneAndUpdate({ _id: req.params.id }, { completed: !todoRef.completed });
+
+    await todo.save();
+
+    return res.status(200).json(todo);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+const updateTodo = async (req, res) => {
+  console.log(req);
+  const { idd, message, date, expDate } = req.body;
+  try {
+    const todo = await Todos.findByIdAndUpdate(idd, {
+      message,
+      date,
+      dateExpiration: expDate,
+    });
+
+    await todo.save();
+
+    return res.status(200).json(todo);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+export { getTodos, addTodo, toggleTodoDone, updateTodo };

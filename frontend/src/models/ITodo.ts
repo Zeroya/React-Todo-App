@@ -38,6 +38,7 @@ export interface IUser {
 
 export interface IMongoTodo {
   _id?: string;
+  idd?: string;
   message: string;
   date: string;
   dateExpiration: string;

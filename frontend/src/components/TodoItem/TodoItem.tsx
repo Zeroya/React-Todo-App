@@ -4,12 +4,22 @@ import { completeTodo, deleteTodo } from "../../store/reducers/UserSlice";
 import { useAppDispatch } from "../../hooks/hooks";
 import s from "./TodoItem.module.scss";
 import ModalWindow from "../ModalWindow/ModalWindow";
+import { completedTodo } from "../../api/todoApi";
 
 const TodoItem: FC<ITodo> = ({ _id, message, date, dateExpiration, completed, dateStored }) => {
   const dispatch = useAppDispatch();
 
+  const completeTodoDB = async (id: string) => {
+    try {
+      const res = await completedTodo(id);
+      dispatch(completeTodo(res.data._id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    dispatch(completeTodo(_id));
+    completeTodoDB(_id);
   };
 
   const handleDelete = (e: MouseEvent<HTMLSpanElement>): void => {
