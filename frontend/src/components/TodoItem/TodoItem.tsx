@@ -11,8 +11,7 @@ const TodoItem: FC<ITodo> = ({ _id, message, date, dateExpiration, completed, da
 
   const completeTodoDB = async (id: string) => {
     try {
-      const res = await completedTodo(id);
-      dispatch(completeTodo(res.data._id));
+      await completedTodo(id);
     } catch (error) {
       console.error(error);
     }
@@ -20,6 +19,7 @@ const TodoItem: FC<ITodo> = ({ _id, message, date, dateExpiration, completed, da
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     completeTodoDB(_id);
+    dispatch(completeTodo(_id));
   };
 
   const handleDelete = (e: MouseEvent<HTMLSpanElement>): void => {
