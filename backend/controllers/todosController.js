@@ -36,14 +36,19 @@ const toggleTodoDone = async (req, res) => {
 
     await todo.save();
 
-    return res.status(200).json(todo);
+    const respInfo = await Todos.findById(req.params.id);
+
+    if (!todo) {
+      res.status(404).json({ msg: `No todo with id: ${req.params.id}` });
+    } else {
+      res.status(200).json(respInfo);
+    }
   } catch (error) {
-    return res.status(500).json(error);
+    res.status(500).json(error);
   }
 };
 
 const updateTodo = async (req, res) => {
-  console.log(req);
   const { idd, message, date, expDate } = req.body;
   try {
     const todo = await Todos.findByIdAndUpdate(idd, {
@@ -54,9 +59,11 @@ const updateTodo = async (req, res) => {
 
     await todo.save();
 
-    return res.status(200).json(todo);
+    const respInfo = await Todos.findById(idd);
+
+    res.status(200).json(respInfo);
   } catch (error) {
-    return res.status(500).json(error);
+    res.status(500).json(error);
   }
 };
 

@@ -11,7 +11,8 @@ const TodoItem: FC<ITodo> = ({ _id, message, date, dateExpiration, completed, da
 
   const completeTodoDB = async (id: string) => {
     try {
-      await completedTodo(id);
+      const response = await completedTodo(id);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }

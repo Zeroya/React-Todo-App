@@ -1,6 +1,6 @@
 import axios from "axios";
-import { BASE_URL } from "../constants/constants";
-import { IMongoTodo, IUser, TodoData, UserDate } from "../models/ITodo";
+import { BASE_URL, HEADERS } from "../constants/constants";
+import { IMongoTodo, IUser, TodoData } from "../models/ITodo";
 
 const fetchTodos = () => {
   return axios.get(BASE_URL + "/todo");
@@ -11,9 +11,7 @@ const addTodoDB = (form: IMongoTodo) => {
     BASE_URL + "/todo/add",
     { ...form },
     {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: HEADERS,
     }
   );
 };
@@ -23,9 +21,7 @@ const completedTodo = (id: string) => {
     BASE_URL + `/todo/completed/${id}`,
     { id },
     {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: HEADERS,
     }
   );
 };
@@ -35,9 +31,7 @@ const updatedTodo = (data: TodoData) => {
     BASE_URL + `/todo/updated/${data.idd}`,
     { ...data },
     {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: HEADERS,
     }
   );
 };
@@ -47,9 +41,7 @@ const loginUser = (form: IUser) => {
     BASE_URL + "/auth/login",
     { ...form },
     {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: HEADERS,
     }
   );
 };

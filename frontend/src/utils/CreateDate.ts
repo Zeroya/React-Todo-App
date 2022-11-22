@@ -1,7 +1,7 @@
 export const getCreationInputDate = (): string => {
   return (
     new Date()
-      .toLocaleDateString()
+      .toLocaleDateString("en-GB")
       .split("")
       .map((el) => (el === "/" ? "." : el))
       .join("") +
@@ -19,7 +19,7 @@ export const getCreationInputDate = (): string => {
 export const getCreationInputDateExpiration = (): string => {
   return (
     new Date()
-      .toLocaleDateString()
+      .toLocaleDateString("en-GB")
       .split("")
       .map((el) => (el === "/" ? "." : el))
       .map((el, i, arr) =>
