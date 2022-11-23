@@ -7,7 +7,7 @@ export const getCreationInputDate = (): string => {
       .join("") +
     " " +
     new Date()
-      .toLocaleTimeString()
+      .toLocaleTimeString("en-GB")
       .split("")
       .filter((el, i, arr) =>
         arr.length === 11 ? i < 5 || i > 7 : arr.length === 10 ? i < 4 || i > 6 : i < arr.length - 3
@@ -44,7 +44,7 @@ export const getCreationInputDateExpiration = (): string => {
       .join("") +
     " " +
     new Date()
-      .toLocaleTimeString()
+      .toLocaleTimeString("en-GB")
       .split("")
       .filter((el, i, arr) =>
         arr.length === 11 ? i < 5 || i > 7 : arr.length === 10 ? i < 4 || i > 6 : i < arr.length - 3
