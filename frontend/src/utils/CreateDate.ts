@@ -1,13 +1,13 @@
 export const getCreationInputDate = (): string => {
   return (
     new Date()
-      .toLocaleDateString()
+      .toLocaleDateString("en-GB")
       .split("")
       .map((el) => (el === "/" ? "." : el))
       .join("") +
     " " +
     new Date()
-      .toLocaleTimeString()
+      .toLocaleTimeString("en-GB")
       .split("")
       .filter((el, i, arr) =>
         arr.length === 11 ? i < 5 || i > 7 : arr.length === 10 ? i < 4 || i > 6 : i < arr.length - 3
@@ -19,7 +19,7 @@ export const getCreationInputDate = (): string => {
 export const getCreationInputDateExpiration = (): string => {
   return (
     new Date()
-      .toLocaleDateString()
+      .toLocaleDateString("en-GB")
       .split("")
       .map((el) => (el === "/" ? "." : el))
       .map((el, i, arr) =>
@@ -44,7 +44,7 @@ export const getCreationInputDateExpiration = (): string => {
       .join("") +
     " " +
     new Date()
-      .toLocaleTimeString()
+      .toLocaleTimeString("en-GB")
       .split("")
       .filter((el, i, arr) =>
         arr.length === 11 ? i < 5 || i > 7 : arr.length === 10 ? i < 4 || i > 6 : i < arr.length - 3

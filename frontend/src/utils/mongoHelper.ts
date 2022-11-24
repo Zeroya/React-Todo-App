@@ -4,8 +4,6 @@ import {
   getCreationInputDate,
   getCreationInputDateExpiration,
   getCreationModalDate,
-  getCreationStoredDateExpiration,
-  getCreationStoredInputDate,
 } from "./CreateDate";
 
 export const addSimpleInputTodo = (message: string): IMongoTodo => {
@@ -44,4 +42,14 @@ export const fechedAllTodo = (input: sendTodo[]): ITodo[] => {
       expDate: getCreatedForm(el.dateExpiration),
     },
   }));
+};
+
+export const reformUpdatedTodo = (input: TodoData): TodoData => {
+  const { idd, message, date, expDate } = input;
+  return {
+    idd,
+    message,
+    date: getCreationModalDate(date),
+    expDate: getCreationModalDate(expDate),
+  };
 };
