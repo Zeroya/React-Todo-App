@@ -22,7 +22,7 @@ const addTodo = async (req, res) => {
     });
 
     await todo.save();
-    res.json(todo);
+    res.status(201).json(todo);
   } catch (error) {
     console.error(error);
   }
