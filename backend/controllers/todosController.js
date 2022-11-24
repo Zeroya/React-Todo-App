@@ -67,4 +67,13 @@ const updateTodo = async (req, res) => {
   }
 };
 
-export { getTodos, addTodo, toggleTodoDone, updateTodo };
+const deleteTodo = async (req, res) => {
+  try {
+    const deleteItem = await Todos.findByIdAndDelete(req.params.id);
+    res.status(200).json(deleteItem);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export { getTodos, addTodo, toggleTodoDone, updateTodo, deleteTodo };

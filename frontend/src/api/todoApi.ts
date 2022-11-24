@@ -36,6 +36,10 @@ const updatedTodo = (data: TodoData) => {
   );
 };
 
+const deletedTodo = (id: string) => {
+  return axios.delete(BASE_URL + `/todo/delete/${id}`);
+};
+
 const loginUser = (form: IUser) => {
   return axios.post(
     BASE_URL + "/auth/login",
@@ -46,4 +50,4 @@ const loginUser = (form: IUser) => {
   );
 };
 
-export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo };
+export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo, deletedTodo };
