@@ -22,7 +22,7 @@ const authLogin = async (req, res) => {
     });
 
     res.cookie("jwt", token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
       sameSite: "none",
     });
@@ -42,19 +42,18 @@ const authLogin = async (req, res) => {
 const logout = (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204);
-  res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "none" });
+  res.clearCookie("jwt", { httpOnly: false, secure: true, sameSite: "none" });
   res.json({ message: "Cookie cleared" });
 };
 
 const isLoggedIn = async (req, res) => {
   const token = req.cookies.jwt;
   if (!token) {
-    return res.status(500).json(false);
+    return res.status(401).json(false);
   }
   return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
     if (err) {
-      res.clearCookie("jwt");
-      return res.status(200).json(false);
+      return res.status(401).json(false);
     } else {
       return res.status(200).json(true);
     }
