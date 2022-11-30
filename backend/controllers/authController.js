@@ -22,10 +22,10 @@ const authLogin = async (req, res) => {
     });
 
     res.cookie("jwt", token, {
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: ".onrender.com",
+      domain: "onrender.com",
     });
 
     return res.status(201).json({
