@@ -22,7 +22,6 @@ const App: FC = () => {
       dispatch(addjwtFlag(res.data));
       setChecker(!!res.data);
     } catch (err) {
-      console.log(err);
       return false;
     }
   };
