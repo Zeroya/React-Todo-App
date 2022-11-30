@@ -18,7 +18,6 @@ const App: FC = () => {
   const verifyAuth = async () => {
     try {
       const res = await isLoggedIn();
-      console.log(res);
       dispatch(addjwtFlag(res.data));
       setChecker(!!res.data);
     } catch (err) {
