@@ -25,7 +25,6 @@ const authLogin = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: "onrender.com",
     });
 
     return res.status(201).json({

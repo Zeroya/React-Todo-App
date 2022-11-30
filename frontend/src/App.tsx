@@ -28,6 +28,10 @@ const App: FC = () => {
 
   useEffect(() => {
     verifyAuth();
+  });
+
+  useEffect(() => {
+    verifyAuth();
   }, [cookieChecker, jwtFlag]);
 
   const routes = useRoutes(!!jwtFlag);
