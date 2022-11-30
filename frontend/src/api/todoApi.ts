@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, HEADERS } from "../constants/constants";
+import { BASE_URL, HEADERS, CREDENTIALS } from "../constants/constants";
 import { IMongoTodo, IUser, TodoData } from "../models/ITodo";
 
 const fetchTodos = () => {
@@ -45,9 +45,21 @@ const loginUser = (form: IUser) => {
     BASE_URL + "/auth/login",
     { ...form },
     {
+      ...CREDENTIALS,
       headers: HEADERS,
     }
   );
 };
 
-export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo, deletedTodo };
+const isLoggedIn = () => {
+  return axios.get(BASE_URL + "/auth/loggedIn", CREDENTIALS);
+};
+
+const isLogout = () => {
+  return axios.get(BASE_URL + "/auth/logout", {
+    ...CREDENTIALS,
+    headers: HEADERS,
+  });
+};
+
+export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo, deletedTodo, isLoggedIn, isLogout };
