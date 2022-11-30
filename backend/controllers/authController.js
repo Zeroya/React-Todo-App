@@ -22,9 +22,9 @@ const authLogin = async (req, res) => {
     });
 
     res.cookie("jwt", token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
-      sameSite: "none",
+      //sameSite: "none",
     });
 
     return res.status(201).json({
@@ -42,7 +42,7 @@ const authLogin = async (req, res) => {
 const logout = (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204);
-  res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "none" });
+  res.clearCookie("jwt", { httpOnly: false, secure: true });
   res.json({ message: "Cookie cleared" });
 };
 
