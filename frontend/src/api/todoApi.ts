@@ -1,5 +1,6 @@
 import axios from "axios";
-import { BASE_URL, HEADERS } from "../constants/constants";
+import { BASE_URL, HEADERS, CREDENTIALS } from "../constants/constants";
+import instance from "../interceptors/axios";
 import { IMongoTodo, IUser, TodoData } from "../models/ITodo";
 
 const fetchTodos = () => {
@@ -45,9 +46,18 @@ const loginUser = (form: IUser) => {
     BASE_URL + "/auth/login",
     { ...form },
     {
+      ...CREDENTIALS,
       headers: HEADERS,
     }
   );
 };
 
-export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo, deletedTodo };
+const isLoggedIn = () => {
+  return instance.get("/auth/loggedIn");
+};
+
+const isLogout = () => {
+  return instance.get(BASE_URL + "/auth/logout");
+};
+
+export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo, deletedTodo, isLoggedIn, isLogout };

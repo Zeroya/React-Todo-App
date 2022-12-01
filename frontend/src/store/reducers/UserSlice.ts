@@ -17,6 +17,7 @@ interface CounterState {
   checker: boolean;
   searchValue: string;
   jwtToken: string;
+  jwtFlag: boolean | undefined;
 }
 
 const initialState: CounterState = {
@@ -25,6 +26,7 @@ const initialState: CounterState = {
   checker: false,
   searchValue: "",
   jwtToken: "",
+  jwtFlag: false,
 };
 
 export const counterSlice = createSlice({
@@ -81,6 +83,9 @@ export const counterSlice = createSlice({
     addjwtToken: (state, action: PayloadAction<string>) => {
       state.jwtToken = action.payload;
     },
+    addjwtFlag: (state, action: PayloadAction<boolean | undefined>) => {
+      state.jwtFlag = action.payload;
+    },
     removejwtToken: (state) => {
       state.jwtToken = "";
     },
@@ -98,6 +103,7 @@ export const {
   addMongoTodos,
   addNewMongoTodo,
   addjwtToken,
+  addjwtFlag,
   removejwtToken,
 } = counterSlice.actions;
 export default counterSlice.reducer;

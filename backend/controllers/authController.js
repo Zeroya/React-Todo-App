@@ -17,9 +17,17 @@ const authLogin = async (req, res) => {
       return res.status(400).json({ msg: "Invalid password." });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "10s",
+    });
 
-    res.status(201).json({
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    return res.status(201).json({
       token,
       user: {
         userId: user._id,
@@ -31,4 +39,25 @@ const authLogin = async (req, res) => {
   }
 };
 
-export { authLogin };
+const logout = (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.sendStatus(204);
+  res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "none" });
+  res.json({ message: "Cookie cleared" });
+};
+
+const isLoggedIn = async (req, res) => {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.status(401).json(false);
+  }
+  return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
+    if (err) {
+      return res.status(401).json(false);
+    } else {
+      return res.status(200).json(true);
+    }
+  });
+};
+
+export { authLogin, isLoggedIn, logout };
