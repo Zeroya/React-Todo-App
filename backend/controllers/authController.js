@@ -57,63 +57,38 @@ const authLogin = async (req, res) => {
 };
 
 const tokenRefresh = (req, res) => {
-  const jwtToken = req.cookies.jwt;
   const refreshToken = req.cookies.refresh;
 
   if (!refreshToken) {
-    return res.status(401).json({
-      errors: [
-        {
-          msg: "Token not found",
-        },
-      ],
-    });
+    return res.status(401).json(false);
   }
 
   if (!refreshTokens.includes(refreshToken)) {
-    return res.status(403).json({
-      errors: [
-        {
-          msg: "Invalid refresh token",
-        },
-      ],
-    });
+    return res.status(403).json("Refresh token is not valid!");
   }
 
-  try {
-    const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    err && console.log(err);
     const { userId } = user;
-
-    jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET, (err) => {
-      if (!err) {
-        return res.json("token exist");
-      }
-    });
 
     const token = jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "10s",
     });
 
     res.cookie("jwt", token, {
+      maxAge: 10 * 10 * 100,
       httpOnly: true,
       secure: true,
       sameSite: "none",
     });
 
     return res.json({ token });
-  } catch (error) {
-    res.status(403).json({
-      errors: [
-        {
-          msg: "Invalid token",
-        },
-      ],
-    });
-  }
+  });
 };
 
 const isLoggedIn = async (req, res) => {
   const token = req.cookies.jwt;
+
   if (!token) {
     return res.status(401).json(false);
   }

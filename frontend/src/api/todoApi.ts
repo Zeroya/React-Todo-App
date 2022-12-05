@@ -8,13 +8,7 @@ const fetchTodos = () => {
 };
 
 const addTodoDB = (form: IMongoTodo) => {
-  return axios.post(
-    BASE_URL + "/todo/add",
-    { ...form },
-    {
-      headers: HEADERS,
-    }
-  );
+  return instance.post("/todo/add", { ...form });
 };
 
 const completedTodo = (id: string) => {
@@ -53,7 +47,10 @@ const loginUser = (form: IUser) => {
 };
 
 const tokenRefresh = () => {
-  return instance.get("/auth/token");
+  return axios.get(BASE_URL + "/auth/token", {
+    headers: HEADERS,
+    ...CREDENTIALS,
+  });
 };
 
 const isLoggedIn = () => {

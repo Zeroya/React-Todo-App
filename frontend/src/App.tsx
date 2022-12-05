@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./hooks/hooks";
 import { useRoutes } from "./hooks/routes";
-import { isLoggedIn, tokenRefresh } from "./api/todoApi";
+import { isLoggedIn } from "./api/todoApi";
 import "./App.css";
 import { addjwtFlag } from "./store/reducers/UserSlice";
 
@@ -23,22 +23,9 @@ const App: FC = () => {
     }
   };
 
-  const tokenRefreshed = async () => {
-    try {
-      await tokenRefresh();
-    } catch (err) {
-      return false;
-    }
-  };
-
   useEffect(() => {
     verifyAuth();
-    tokenRefreshed();
   }, [tokenActive, jwtFlag]);
-
-  useEffect(() => {
-    tokenRefreshed();
-  }, []);
 
   const routes = useRoutes(!jwtToken ? !!jwtToken : !!jwtFlag);
   if (jwtFlag === undefined) return <h3>loading...</h3>;
