@@ -30,14 +30,14 @@ const authLogin = async (req, res) => {
     res.cookie("jwt", token, {
       maxAge: 10 * 10 * 100,
       // httpOnly: true,
-      // secure: true,
+      secure: true,
       // sameSite: "none",
     });
 
     res.cookie("refresh", refreshToken, {
       maxAge: 60 * 100 * 10,
       // httpOnly: true,
-      // secure: true,
+      secure: true,
       // sameSite: "none",
     });
 
@@ -94,15 +94,11 @@ const tokenRefresh = (req, res) => {
       expiresIn: "10s",
     });
 
-    res.cookie(
-      "jwt",
-      token
-      // {
-      //   // httpOnly: true,
-      //   // secure: true,
+    res.cookie("jwt", token, {
+      //   httpOnly: true,
+      secure: true,
       //   // sameSite: "none",
-      // }
-    );
+    });
 
     res.json({ token });
   } catch (error) {
