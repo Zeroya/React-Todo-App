@@ -22,8 +22,8 @@ const Login: FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const getToken = (token: string, userId: string): void => {
-    login(token, userId);
+  const getToken = (token: string, refreshToken: string, userId: string): void => {
+    login(token, refreshToken, userId);
     dispatch(addjwtToken(token));
   };
 
@@ -34,7 +34,9 @@ const Login: FC = () => {
         return;
       }
       setChecker(true);
-      await loginUser(form).then((response) => getToken(response.data.token, response.data.user.userId));
+      await loginUser(form).then((response) =>
+        getToken(response.data.token, response.data.refreshToken, response.data.user.userId)
+      );
       setChecker(false);
     } catch (error) {
       setChecker(false);

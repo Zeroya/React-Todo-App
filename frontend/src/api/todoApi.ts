@@ -52,12 +52,12 @@ const loginUser = (form: IUser) => {
   );
 };
 
+const tokenRefresh = () => {
+  return instance.get("/auth/token");
+};
+
 const isLoggedIn = () => {
   return instance.get("/auth/loggedIn");
 };
 
-const isLogout = () => {
-  return instance.get(BASE_URL + "/auth/logout");
-};
-
-export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo, deletedTodo, isLoggedIn, isLogout };
+export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo, deletedTodo, isLoggedIn, tokenRefresh };

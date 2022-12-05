@@ -1,8 +1,7 @@
 import React, { FC, useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./hooks/hooks";
 import { useRoutes } from "./hooks/routes";
-import { isLoggedIn } from "./api/todoApi";
-import Cookies from "universal-cookie";
+import { isLoggedIn, tokenRefresh } from "./api/todoApi";
 import "./App.css";
 import { addjwtFlag } from "./store/reducers/UserSlice";
 
@@ -12,8 +11,7 @@ const App: FC = () => {
   const jwtToken = useAppSelector((state) => state.todos.jwtToken);
   const jwtFlag = useAppSelector((state) => state.todos.jwtFlag);
 
-  const cookies = new Cookies();
-  const cookieChecker = cookies.get("jwt");
+  const tokenActive = localStorage.getItem("userData");
 
   const verifyAuth = async () => {
     try {
@@ -25,15 +23,20 @@ const App: FC = () => {
     }
   };
 
-  useEffect(() => {
-    verifyAuth();
-  });
+  const tokenRefreshed = async () => {
+    try {
+      await tokenRefresh();
+    } catch (err) {
+      return false;
+    }
+  };
 
   useEffect(() => {
     verifyAuth();
-  }, [cookieChecker, jwtFlag]);
+    tokenRefreshed();
+  }, [tokenActive, jwtFlag]);
 
-  const routes = useRoutes(!!jwtFlag);
+  const routes = useRoutes(!jwtToken ? !!jwtToken : !!jwtFlag);
   if (jwtFlag === undefined) return <h3>loading...</h3>;
   return <div className="App">{routes}</div>;
 };

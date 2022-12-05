@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BASE_URL, HEADERS, CREDENTIALS } from "../constants/constants";
-import Cookies from "universal-cookie";
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -14,8 +13,7 @@ instance.interceptors.response.use(
   },
   function (err) {
     if (err?.response?.status === 401) {
-      const cookies = new Cookies();
-      cookies.remove("jwt");
+      localStorage.removeItem("userData");
       return err.response;
     }
     return Promise.reject(err);

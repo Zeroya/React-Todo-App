@@ -2,6 +2,8 @@ import Users from "../models/userModal.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+let refreshTokens = [];
+
 const authLogin = async (req, res) => {
   try {
     const { userName, password } = req.body;
@@ -21,14 +23,29 @@ const authLogin = async (req, res) => {
       expiresIn: "10s",
     });
 
+    const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, {
+      expiresIn: "1m",
+    });
+
     res.cookie("jwt", token, {
+      maxAge: 10 * 10 * 100,
       httpOnly: true,
       secure: true,
       sameSite: "none",
     });
 
+    res.cookie("refresh", refreshToken, {
+      maxAge: 60 * 100 * 10,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    refreshTokens.push(refreshToken);
+
     return res.status(201).json({
       token,
+      refreshToken,
       user: {
         userId: user._id,
         userName: user.userName,
@@ -39,11 +56,60 @@ const authLogin = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {
-  const cookies = req.cookies;
-  if (!cookies?.jwt) return res.sendStatus(204);
-  res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "none" });
-  res.json({ message: "Cookie cleared" });
+const tokenRefresh = (req, res) => {
+  const jwtToken = req.cookies.jwt;
+  const refreshToken = req.cookies.refresh;
+
+  if (!refreshToken) {
+    res.status(401).json({
+      errors: [
+        {
+          msg: "Token not found",
+        },
+      ],
+    });
+  }
+
+  if (!refreshTokens.includes(refreshToken)) {
+    res.status(403).json({
+      errors: [
+        {
+          msg: "Invalid refresh token",
+        },
+      ],
+    });
+  }
+
+  try {
+    const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const { userId } = user;
+
+    jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET, (err) => {
+      if (err) {
+        const token = jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET, {
+          expiresIn: "10s",
+        });
+
+        res.cookie("jwt", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+        });
+
+        res.json({ token });
+      } else {
+        return;
+      }
+    });
+  } catch (error) {
+    res.status(403).json({
+      errors: [
+        {
+          msg: "Invalid token",
+        },
+      ],
+    });
+  }
 };
 
 const isLoggedIn = async (req, res) => {
@@ -53,6 +119,7 @@ const isLoggedIn = async (req, res) => {
   }
   return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
     if (err) {
+      res.clearCookie("jwt");
       return res.status(401).json(false);
     } else {
       return res.status(200).json(true);
@@ -60,4 +127,4 @@ const isLoggedIn = async (req, res) => {
   });
 };
 
-export { authLogin, isLoggedIn, logout };
+export { authLogin, isLoggedIn, tokenRefresh };

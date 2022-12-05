@@ -5,17 +5,18 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export const checkAuth = (req, res, next) => {
-  const token = req.cookies.jwt;
+  let token = req.headers["authorization"];
+  token = token.split(" ")[1];
 
   if (!token) {
     return next(createError({ status: 401, message: "Unauthorized" }));
   }
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
       return next(createError({ status: 401, message: "Unauthorized, invalid token" }));
     }
-    req.user = decoded;
+    req.user = user;
     return next();
   });
 };
