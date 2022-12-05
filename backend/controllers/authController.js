@@ -61,7 +61,7 @@ const tokenRefresh = (req, res) => {
   const refreshToken = req.cookies.refresh;
 
   if (!refreshToken) {
-    res.status(401).json({
+    return res.status(401).json({
       errors: [
         {
           msg: "Token not found",
@@ -71,7 +71,7 @@ const tokenRefresh = (req, res) => {
   }
 
   if (!refreshTokens.includes(refreshToken)) {
-    res.status(403).json({
+    return res.status(403).json({
       errors: [
         {
           msg: "Invalid refresh token",
@@ -100,7 +100,7 @@ const tokenRefresh = (req, res) => {
       sameSite: "none",
     });
 
-    res.json({ token });
+    return res.json({ token });
   } catch (error) {
     res.status(403).json({
       errors: [
