@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: ["http://localhost:3000", "https://mern-todo-app-static.onrender.com"] }));
+app.use(cors({ credentials: true, origin: "https://mern-todo-app-static.onrender.com" }));
 app.use("/todo", todoRoutes);
 app.use("/auth", userRoutes);
 
