@@ -56,7 +56,7 @@ const authLogin = async (req, res) => {
   }
 };
 
-const tokenRefresh = (req, res) => {
+const tokenRefresh = async (req, res) => {
   const jwtToken = req.cookies.jwt;
   const refreshToken = req.cookies.refresh;
 
@@ -81,10 +81,10 @@ const tokenRefresh = (req, res) => {
   }
 
   try {
-    const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const user = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     const { userId } = user;
 
-    jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET, (err) => {
+    await jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET, (err) => {
       if (err) {
         const token = jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET, {
           expiresIn: "10s",
