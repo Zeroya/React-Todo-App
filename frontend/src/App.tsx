@@ -36,10 +36,6 @@ const App: FC = () => {
     tokenRefreshed();
   }, [tokenActive, jwtFlag]);
 
-  useEffect(() => {
-    tokenRefreshed();
-  }, []);
-
   const routes = useRoutes(!jwtToken ? !!jwtToken : !!jwtFlag);
   if (jwtFlag === undefined) return <h3>loading...</h3>;
   return <div className="App">{routes}</div>;
