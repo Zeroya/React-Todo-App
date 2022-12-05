@@ -5,8 +5,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export const checkAuth = (req, res, next) => {
-  let token = req.headers["authorization"];
-  token = token.split(" ")[1];
+  const token = req.cookies.jwt;
 
   if (!token) {
     return next(createError({ status: 401, message: "Unauthorized" }));

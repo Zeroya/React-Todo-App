@@ -29,16 +29,16 @@ const authLogin = async (req, res) => {
 
     res.cookie("jwt", token, {
       maxAge: 10 * 10 * 100,
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      // httpOnly: true,
+      // secure: true,
+      // sameSite: "none",
     });
 
     res.cookie("refresh", refreshToken, {
       maxAge: 60 * 100 * 10,
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      // httpOnly: true,
+      // secure: true,
+      // sameSite: "none",
     });
 
     refreshTokens.push(refreshToken);
@@ -56,7 +56,7 @@ const authLogin = async (req, res) => {
   }
 };
 
-const tokenRefresh = async (req, res) => {
+const tokenRefresh = (req, res) => {
   const jwtToken = req.cookies.jwt;
   const refreshToken = req.cookies.refresh;
 
@@ -81,26 +81,30 @@ const tokenRefresh = async (req, res) => {
   }
 
   try {
-    const user = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     const { userId } = user;
 
-    await jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET, (err) => {
-      if (err) {
-        const token = jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET, {
-          expiresIn: "10s",
-        });
-
-        res.cookie("jwt", token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
-        });
-
-        res.json({ token });
-      } else {
-        return;
+    jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET, (err) => {
+      if (!err) {
+        return res.json("token exist");
       }
     });
+
+    const token = jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "10s",
+    });
+
+    res.cookie(
+      "jwt",
+      token
+      // {
+      //   // httpOnly: true,
+      //   // secure: true,
+      //   // sameSite: "none",
+      // }
+    );
+
+    res.json({ token });
   } catch (error) {
     res.status(403).json({
       errors: [
