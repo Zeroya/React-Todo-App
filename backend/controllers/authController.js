@@ -24,7 +24,7 @@ const authLogin = async (req, res) => {
     });
 
     const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: "1m",
+      expiresIn: "1d",
     });
 
     res.cookie("jwt", token, {
@@ -35,7 +35,7 @@ const authLogin = async (req, res) => {
     });
 
     res.cookie("refresh", refreshToken, {
-      maxAge: 60 * 100 * 10,
+      maxAge: 60 * 60 * 24 * 1000,
       httpOnly: true,
       secure: true,
       sameSite: "none",

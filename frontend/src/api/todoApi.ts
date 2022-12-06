@@ -12,27 +12,15 @@ const addTodoDB = (form: IMongoTodo) => {
 };
 
 const completedTodo = (id: string) => {
-  return axios.put(
-    BASE_URL + `/todo/completed/${id}`,
-    { id },
-    {
-      headers: HEADERS,
-    }
-  );
+  return instance.put(`/todo/completed/${id}`, { id });
 };
 
 const updatedTodo = (data: TodoData) => {
-  return axios.put(
-    BASE_URL + `/todo/updated/${data.idd}`,
-    { ...data },
-    {
-      headers: HEADERS,
-    }
-  );
+  return instance.put(`/todo/updated/${data.idd}`, { ...data });
 };
 
 const deletedTodo = (id: string) => {
-  return axios.delete(BASE_URL + `/todo/delete/${id}`);
+  return instance.delete(`/todo/delete/${id}`);
 };
 
 const loginUser = (form: IUser) => {
