@@ -13,7 +13,7 @@ export const checkAuth = (req, res, next) => {
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
-      return next(createError({ status: 401, message: "Unauthorized, invalid token" }));
+      res.status(401).json({ message: "Not authorized" });
     }
     req.user = user;
     return next();
