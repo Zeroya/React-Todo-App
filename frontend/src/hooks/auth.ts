@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { isLogout } from "../api/todoApi";
 import { useAppDispatch } from "../hooks/hooks";
 import { removejwtToken, addjwtFlag } from "../store/reducers/UserSlice";
 
@@ -22,7 +23,8 @@ export const useAuth = () => {
     );
   }, []);
 
-  const logout = () => {
+  const logout = async () => {
+    await isLogout();
     setToken(null);
     setUserId("");
     localStorage.removeItem("userData");

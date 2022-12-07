@@ -9,34 +9,53 @@ const instance = axios.create({
   ...CREDENTIALS,
 });
 
-instance.interceptors.request.use(async (config) => {
-  const userData = JSON.parse(localStorage.getItem("userData") || "{}");
-  let currentDate = new Date();
-  const decodedToken: any = jwt_decode(userData.token);
+instance.interceptors.request.use(
+  async (config) => {
+    const userData = JSON.parse(localStorage.getItem("userData") || "{}");
 
-  if (decodedToken.exp * 1000 < currentDate.getTime()) {
-    const res = await tokenRefresh();
-    localStorage.removeItem("userData");
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        userId: userData.userId,
-        ...res.data,
-        refreshToken: userData.refreshToken,
-      })
-    );
+    if (userData?.token) {
+      config.headers = config.headers ?? {};
+      config.headers["x-auth-token"] = userData.token;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 
 instance.interceptors.response.use(
   function (res) {
     return res;
   },
-  function (err) {
-    if (err?.response?.status === 401) {
-      localStorage.removeItem("userData");
-      return err.response;
+  async function (err) {
+    const userData = JSON.parse(localStorage.getItem("userData") || "{}");
+    const originalConfig = err?.config;
+
+    if (err.response.status === 401 && !originalConfig._retry) {
+      originalConfig._retry = true;
+
+      try {
+        const rs = await tokenRefresh();
+
+        localStorage.removeItem("userData");
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            userId: userData.userId,
+            ...rs.data,
+            refreshToken: userData.refreshToken,
+          })
+        );
+
+        originalConfig.headers = originalConfig.headers ?? {};
+        originalConfig.headers["x-auth-token"] = rs.data.token;
+
+        return instance(originalConfig);
+      } catch (_error) {
+        return Promise.reject(_error);
+      }
     }
     return Promise.reject(err);
   }

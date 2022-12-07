@@ -4,7 +4,7 @@ import { checkAuth } from "../middlewares/checkAuth.js";
 
 const router = express.Router();
 
-router.get("/", getTodos);
+router.get("/", checkAuth, getTodos);
 
 router.post("/add", checkAuth, addTodo);
 

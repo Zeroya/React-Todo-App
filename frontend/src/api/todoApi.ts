@@ -4,7 +4,7 @@ import instance from "../interceptors/axios";
 import { IMongoTodo, IUser, TodoData } from "../models/ITodo";
 
 const fetchTodos = () => {
-  return axios.get(BASE_URL + "/todo");
+  return instance.get("/todo");
 };
 
 const addTodoDB = (form: IMongoTodo) => {
@@ -41,8 +41,25 @@ const tokenRefresh = () => {
   });
 };
 
+const isLogout = () => {
+  return axios.get(BASE_URL + "/auth/logout", {
+    headers: HEADERS,
+    ...CREDENTIALS,
+  });
+};
+
 const isLoggedIn = () => {
   return instance.get("/auth/loggedIn");
 };
 
-export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo, deletedTodo, isLoggedIn, tokenRefresh };
+export {
+  fetchTodos,
+  loginUser,
+  addTodoDB,
+  completedTodo,
+  updatedTodo,
+  deletedTodo,
+  isLoggedIn,
+  tokenRefresh,
+  isLogout,
+};

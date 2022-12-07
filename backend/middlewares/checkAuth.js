@@ -4,18 +4,20 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-export const checkAuth = (req, res, next) => {
-  const token = req.cookies.jwt;
+export const checkAuth = async (req, res, next) => {
+  const token = req.header("x-auth-token");
 
   if (!token) {
-    return next(createError({ status: 401, message: "Unauthorized" }));
+    return next(createError({ status: 401, message: "Token not found" }));
   }
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) {
-      res.status(401).json({ message: "Not authorized" });
-    }
+  try {
+    const user = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    console.log(req.user);
     req.user = user;
-    return next();
-  });
+    console.log(req.user);
+    next();
+  } catch (error) {
+    res.status(401).json({ message: "Invalid or expired access token" });
+  }
 };

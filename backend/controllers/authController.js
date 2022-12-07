@@ -102,4 +102,11 @@ const isLoggedIn = async (req, res) => {
   });
 };
 
-export { authLogin, isLoggedIn, tokenRefresh };
+const logout = (req, res) => {
+  const refreshToken = req.cookies.refresh;
+  res.clearCookie("refresh", { httpOnly: false, secure: true, sameSite: "none" });
+  refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+  res.sendStatus(204);
+};
+
+export { authLogin, isLoggedIn, tokenRefresh, logout };
