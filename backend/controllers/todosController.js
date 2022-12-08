@@ -73,9 +73,8 @@ const updateTodo = async (req, res) => {
 
 const deleteTodo = async (req, res) => {
   try {
-    await Todos.findByIdAndDelete(req.params.id);
-    const respInfo = await Todos.findById(req.params.id);
-    respInfo && res.status(200).json(respInfo);
+    const deleteItem = await Todos.findByIdAndDelete(req.params.id);
+    res.status(200).json(deleteItem);
   } catch (error) {
     res.status(500).json(error);
   }

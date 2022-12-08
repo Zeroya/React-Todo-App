@@ -50,9 +50,12 @@ instance.interceptors.response.use(
         );
 
         originalConfig.headers = originalConfig.headers ?? {};
-        originalConfig.headers["x-auth-token"] = rs.data.token;
+        originalConfig.headers = {
+          ...originalConfig.headers,
+          "x-auth-token": rs.data.token,
+        };
 
-        return instance(originalConfig);
+        return instance.request(originalConfig);
       } catch (_error) {
         return Promise.reject(_error);
       }
