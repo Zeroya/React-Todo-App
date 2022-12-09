@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL, HEADERS, CREDENTIALS } from "../constants/constants";
-import { tokenRefresh } from "../api/todoApi";
+import { isLogout, tokenRefresh } from "../api/todoApi";
 import jwt_decode from "jwt-decode";
 
 const instance = axios.create({
@@ -56,8 +56,8 @@ instance.interceptors.response.use(
         };
 
         return instance.request(originalConfig);
-      } catch (_error) {
-        return Promise.reject(_error);
+      } catch {
+        await isLogout();
       }
     }
     return Promise.reject(err);
