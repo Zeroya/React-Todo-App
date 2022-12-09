@@ -14,4 +14,6 @@ router.put("/updated/:id", checkAuth, updateTodo);
 
 router.delete("/delete/:id", checkAuth, deleteTodo);
 
+router.delete("/delete", checkAuth, deleteTodo);
+
 export default router;

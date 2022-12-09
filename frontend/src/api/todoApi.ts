@@ -19,8 +19,11 @@ const updatedTodo = (data: TodoData) => {
   return instance.put(`/todo/updated/${data.idd}`, { ...data });
 };
 
-const deletedTodo = (id: string) => {
-  return instance.delete(`/todo/delete/${id}`);
+const deletedTodo = (id?: string) => {
+  if (id) {
+    return instance.delete(`/todo/delete/${id}`);
+  }
+  return instance.delete("/todo/delete");
 };
 
 const loginUser = (form: IUser) => {
