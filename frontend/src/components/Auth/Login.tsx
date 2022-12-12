@@ -34,8 +34,14 @@ const Login: FC = () => {
         return;
       }
       setChecker(true);
-      await loginUser(form).then((response) =>
-        getToken(response.data.token, response.data.refreshToken, response.data.user.userId)
+      await loginUser(form).then(
+        ({
+          data: {
+            token,
+            refreshToken,
+            user: { userId },
+          },
+        }) => getToken(token, refreshToken, userId)
       );
       setChecker(false);
     } catch (error) {

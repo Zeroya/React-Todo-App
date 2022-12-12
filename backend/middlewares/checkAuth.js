@@ -13,9 +13,7 @@ export const checkAuth = async (req, res, next) => {
 
   try {
     const user = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    console.log(req.user);
     req.user = user;
-    console.log(req.user);
     next();
   } catch (error) {
     res.status(401).json({ message: "Invalid or expired access token" });

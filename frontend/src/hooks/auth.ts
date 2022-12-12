@@ -5,11 +5,11 @@ import { removejwtToken, addjwtFlag } from "../store/reducers/UserSlice";
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
   const [userId, setUserId] = useState("");
   const [isReady, setIsReady] = useState(false);
 
-  const login = useCallback((jwtToken: any, refreshToken: string, id: string) => {
+  const login = useCallback((jwtToken: string, refreshToken: string, id: string) => {
     setToken(jwtToken);
     setUserId(id);
     dispatch(addjwtFlag(true));

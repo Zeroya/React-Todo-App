@@ -3,6 +3,8 @@ import Users from "../models/userModal.js";
 import jwt from "jsonwebtoken";
 
 let refreshTokens = [];
+const accessTokenLifetime = 10 * 10 * 100;
+const refreshTokenLifetime = 60 * 60 * 24 * 1000;
 
 const authLogin = async (req, res) => {
   try {
@@ -28,14 +30,14 @@ const authLogin = async (req, res) => {
     });
 
     res.cookie("jwt", token, {
-      maxAge: 10 * 10 * 100,
+      maxAge: accessTokenLifetime,
       httpOnly: true,
       secure: true,
       sameSite: "none",
     });
 
     res.cookie("refresh", refreshToken, {
-      maxAge: 60 * 60 * 24 * 1000,
+      maxAge: refreshTokenLifetime,
       httpOnly: true,
       secure: true,
       sameSite: "none",
@@ -76,7 +78,7 @@ const tokenRefresh = (req, res) => {
     });
 
     res.cookie("jwt", token, {
-      maxAge: 10 * 10 * 100,
+      maxAge: accessTokenLifetime,
       httpOnly: true,
       secure: true,
       sameSite: "none",

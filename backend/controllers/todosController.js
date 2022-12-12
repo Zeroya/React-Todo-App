@@ -75,7 +75,7 @@ const deleteTodo = async (req, res) => {
   }
 };
 
-const buttonFilterTodos = async (req, res) => {
+const filterTodos = async (req, res) => {
   let param = req.params.param;
   if (param) {
     try {
@@ -95,4 +95,4 @@ const buttonFilterTodos = async (req, res) => {
   }
 };
 
-export { addTodo, toggleTodoDone, updateTodo, deleteTodo, buttonFilterTodos };
+export { addTodo, toggleTodoDone, updateTodo, deleteTodo, filterTodos };
