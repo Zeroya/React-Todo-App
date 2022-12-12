@@ -1,9 +1,10 @@
 import React, { useState, useLayoutEffect } from "react";
 import Button from "react-bootstrap/Button";
-import { filterTodos } from "../../store/reducers/UserSlice";
-import { deletedTodo } from "../../api/todoApi";
+import { addMongoTodos, filterTodos, checker } from "../../store/reducers/UserSlice";
+import { deletedTodo, filterAllTodos } from "../../api/todoApi";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import s from "./TodoButtons.module.scss";
+import { fechedAllTodo } from "../../utils/mongoHelper";
 
 const TodoButtons = () => {
   const checkerValue = useAppSelector((state) => state.todos.checker);
@@ -19,9 +20,22 @@ const TodoButtons = () => {
     }
   };
 
+  const filterTodosDB = async (param: string) => {
+    try {
+      const response = await filterAllTodos(param);
+      return dispatch(addMongoTodos(fechedAllTodo(response.data)));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleClick = async (fieldName: string, strNum?: number) => {
     setClick(click.map((el, i, arr) => (i === strNum ? !el : false)));
-    typeof strNum !== "number" && (await deleteTodosDB()) && setClick(click.map((_, i) => i === 0));
+    typeof strNum !== "number" &&
+      (await deleteTodosDB()) &&
+      dispatch(checker()) &&
+      setClick(click.map((_, i) => i === 0));
+    fieldName && typeof strNum === "number" && (await filterTodosDB(fieldName));
     dispatch(filterTodos(fieldName));
   };
 

@@ -1,32 +1,14 @@
-import React, { FC, useEffect, useMemo } from "react";
-import { fetchTodos } from "../../api/todoApi";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import React, { FC, useMemo } from "react";
+import { useAppSelector } from "../../hooks/hooks";
 import { ITodo } from "../../models/ITodo";
-import { addMongoTodos } from "../../store/reducers/UserSlice";
 import { Сondition } from "../../models/Enums";
 import TodoItem from "../TodoItem/TodoItem";
 import s from "./TodoList.module.scss";
-import { fechedAllTodo } from "../../utils/mongoHelper";
 
 const TodoList: FC = () => {
   const todos = useAppSelector((state) => state.todos.todos);
   const filtValue = useAppSelector((state) => state.todos.filtValue);
   const searchedValue = useAppSelector((state) => state.todos.searchValue);
-
-  const dispatch = useAppDispatch();
-
-  const getStaticTodos = async () => {
-    try {
-      const response = await fetchTodos();
-      dispatch(addMongoTodos(fechedAllTodo(response.data)));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    getStaticTodos();
-  }, []);
 
   let todoBlock = todos
     .filter((todo: ITodo) =>

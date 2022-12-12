@@ -3,10 +3,6 @@ import { BASE_URL, HEADERS, CREDENTIALS } from "../constants/constants";
 import instance from "../interceptors/axios";
 import { IMongoTodo, IUser, TodoData } from "../models/ITodo";
 
-const fetchTodos = () => {
-  return instance.get("/todo");
-};
-
 const addTodoDB = (form: IMongoTodo) => {
   return instance.post("/todo/add", { ...form });
 };
@@ -17,6 +13,10 @@ const completedTodo = (id: string) => {
 
 const updatedTodo = (data: TodoData) => {
   return instance.put(`/todo/updated/${data.idd}`, { ...data });
+};
+
+const filterAllTodos = (param: string) => {
+  return instance.get(`/todo/filter/${param}`);
 };
 
 const deletedTodo = (id?: string) => {
@@ -56,7 +56,6 @@ const isLoggedIn = () => {
 };
 
 export {
-  fetchTodos,
   loginUser,
   addTodoDB,
   completedTodo,
@@ -65,4 +64,5 @@ export {
   isLoggedIn,
   tokenRefresh,
   isLogout,
+  filterAllTodos,
 };

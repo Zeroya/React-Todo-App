@@ -1,15 +1,5 @@
 import Todos from "../models/todoModal.js";
 
-const getTodos = async (req, res) => {
-  Todos.find({})
-    .then((items) => {
-      res.json(items);
-    })
-    .catch((err) => {
-      console.log("Error", err);
-    });
-};
-
 const addTodo = async (req, res) => {
   try {
     const { message, date, dateExpiration } = req.body;
@@ -85,4 +75,24 @@ const deleteTodo = async (req, res) => {
   }
 };
 
-export { getTodos, addTodo, toggleTodoDone, updateTodo, deleteTodo };
+const buttonFilterTodos = async (req, res) => {
+  let param = req.params.param;
+  if (param) {
+    try {
+      if (param === "active") {
+        const activeTodos = await Todos.find({ completed: false });
+        return res.status(200).json(activeTodos);
+      }
+      if (param === "completed") {
+        const completedTodos = await Todos.find({ completed: true });
+        return res.status(200).json(completedTodos);
+      }
+      const allTodos = await Todos.find({});
+      return res.status(200).json(allTodos);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+};
+
+export { addTodo, toggleTodoDone, updateTodo, deleteTodo, buttonFilterTodos };

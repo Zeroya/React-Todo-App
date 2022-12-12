@@ -1,10 +1,8 @@
 import express from "express";
-import { getTodos, addTodo, toggleTodoDone, updateTodo, deleteTodo } from "../controllers/todosController.js";
+import { addTodo, toggleTodoDone, updateTodo, deleteTodo, buttonFilterTodos } from "../controllers/todosController.js";
 import { checkAuth } from "../middlewares/checkAuth.js";
 
 const router = express.Router();
-
-router.get("/", checkAuth, getTodos);
 
 router.post("/add", checkAuth, addTodo);
 
@@ -15,5 +13,7 @@ router.put("/updated/:id", checkAuth, updateTodo);
 router.delete("/delete/:id", checkAuth, deleteTodo);
 
 router.delete("/delete", checkAuth, deleteTodo);
+
+router.get("/filter/:param", checkAuth, buttonFilterTodos);
 
 export default router;
