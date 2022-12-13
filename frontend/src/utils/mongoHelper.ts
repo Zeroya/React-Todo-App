@@ -7,19 +7,23 @@ import {
 } from "./CreateDate";
 
 export const addSimpleInputTodo = (message: string): IMongoTodo => {
+  const userData = JSON.parse(localStorage.getItem("userData") || "{}");
   return {
     message,
     date: getCreationInputDate(),
     dateExpiration: getCreationInputDateExpiration(),
+    userId: userData.userId,
   };
 };
 
 export const addModalInputTodo = (input: TodoData): IMongoTodo => {
+  const userData = JSON.parse(localStorage.getItem("userData") || "{}");
   const { message, date, expDate } = input;
   return {
     message,
     date: getCreationModalDate(date),
     dateExpiration: getCreationModalDate(expDate),
+    userId: userData.userId,
   };
 };
 

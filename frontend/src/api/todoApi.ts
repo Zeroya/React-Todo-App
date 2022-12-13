@@ -15,8 +15,8 @@ const updatedTodo = (data: TodoData) => {
   return instance.put(`/todo/updated/${data.idd}`, { ...data });
 };
 
-const filterAllTodos = (param: string) => {
-  return instance.get(`/todo/filter/${param}`);
+const filterAllTodos = (param: string, userId: string) => {
+  return instance.get(`/todo/filter/${param}`, { params: { userId } });
 };
 
 const deletedTodo = (id?: string) => {
@@ -33,6 +33,17 @@ const loginUser = (form: IUser) => {
     {
       ...CREDENTIALS,
       headers: HEADERS,
+    }
+  );
+};
+
+const registerUser = (form: IUser) => {
+  return axios.post(
+    BASE_URL + "/auth/register",
+    { ...form },
+    {
+      headers: HEADERS,
+      ...CREDENTIALS,
     }
   );
 };
@@ -57,6 +68,7 @@ const isLoggedIn = () => {
 
 export {
   loginUser,
+  registerUser,
   addTodoDB,
   completedTodo,
   updatedTodo,
