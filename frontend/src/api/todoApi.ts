@@ -3,42 +3,27 @@ import { BASE_URL, HEADERS, CREDENTIALS } from "../constants/constants";
 import instance from "../interceptors/axios";
 import { IMongoTodo, IUser, TodoData } from "../models/ITodo";
 
-const fetchTodos = () => {
-  return axios.get(BASE_URL + "/todo");
-};
-
 const addTodoDB = (form: IMongoTodo) => {
-  return axios.post(
-    BASE_URL + "/todo/add",
-    { ...form },
-    {
-      headers: HEADERS,
-    }
-  );
+  return instance.post("/todo/add", { ...form });
 };
 
 const completedTodo = (id: string) => {
-  return axios.put(
-    BASE_URL + `/todo/completed/${id}`,
-    { id },
-    {
-      headers: HEADERS,
-    }
-  );
+  return instance.put(`/todo/completed/${id}`, { id });
 };
 
 const updatedTodo = (data: TodoData) => {
-  return axios.put(
-    BASE_URL + `/todo/updated/${data.idd}`,
-    { ...data },
-    {
-      headers: HEADERS,
-    }
-  );
+  return instance.put(`/todo/updated/${data.idd}`, { ...data });
 };
 
-const deletedTodo = (id: string) => {
-  return axios.delete(BASE_URL + `/todo/delete/${id}`);
+const filterAllTodos = (param: string) => {
+  return instance.get(`/todo/filter/${param}`);
+};
+
+const deletedTodo = (id?: string) => {
+  if (id) {
+    return instance.delete(`/todo/delete/${id}`);
+  }
+  return instance.delete("/todo/delete");
 };
 
 const loginUser = (form: IUser) => {
@@ -52,12 +37,32 @@ const loginUser = (form: IUser) => {
   );
 };
 
+const tokenRefresh = () => {
+  return axios.get(BASE_URL + "/auth/token", {
+    headers: HEADERS,
+    ...CREDENTIALS,
+  });
+};
+
+const isLogout = () => {
+  return axios.get(BASE_URL + "/auth/logout", {
+    headers: HEADERS,
+    ...CREDENTIALS,
+  });
+};
+
 const isLoggedIn = () => {
   return instance.get("/auth/loggedIn");
 };
 
-const isLogout = () => {
-  return instance.get(BASE_URL + "/auth/logout");
+export {
+  loginUser,
+  addTodoDB,
+  completedTodo,
+  updatedTodo,
+  deletedTodo,
+  isLoggedIn,
+  tokenRefresh,
+  isLogout,
+  filterAllTodos,
 };
-
-export { fetchTodos, loginUser, addTodoDB, completedTodo, updatedTodo, deletedTodo, isLoggedIn, isLogout };

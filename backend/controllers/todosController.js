@@ -1,15 +1,5 @@
 import Todos from "../models/todoModal.js";
 
-const getTodos = async (req, res) => {
-  Todos.find({})
-    .then((items) => {
-      res.json(items);
-    })
-    .catch((err) => {
-      console.log("Error", err);
-    });
-};
-
 const addTodo = async (req, res) => {
   try {
     const { message, date, dateExpiration } = req.body;
@@ -49,8 +39,8 @@ const toggleTodoDone = async (req, res) => {
 };
 
 const updateTodo = async (req, res) => {
-  const { idd, message, date, expDate } = req.body;
   try {
+    const { idd, message, date, expDate } = req.body;
     const todo = await Todos.findByIdAndUpdate(idd, {
       message,
       date,
@@ -61,7 +51,11 @@ const updateTodo = async (req, res) => {
 
     const respInfo = await Todos.findById(idd);
 
-    res.status(200).json(respInfo);
+    if (!todo) {
+      res.status(404).json({ msg: `No todo with id: ${req.params.id}` });
+    } else {
+      res.status(200).json(respInfo);
+    }
   } catch (error) {
     res.status(500).json(error);
   }
@@ -69,11 +63,36 @@ const updateTodo = async (req, res) => {
 
 const deleteTodo = async (req, res) => {
   try {
+    if (!req.params.id) {
+      const todos = await Todos.find({ completed: true }).deleteMany();
+      return res.status(200).json(todos);
+    }
+
     const deleteItem = await Todos.findByIdAndDelete(req.params.id);
-    res.status(200).json(deleteItem);
+    return res.status(200).json(deleteItem);
   } catch (error) {
     res.status(500).json(error);
   }
 };
 
-export { getTodos, addTodo, toggleTodoDone, updateTodo, deleteTodo };
+const filterTodos = async (req, res) => {
+  let param = req.params.param;
+  if (param) {
+    try {
+      if (param === "active") {
+        const activeTodos = await Todos.find({ completed: false });
+        return res.status(200).json(activeTodos);
+      }
+      if (param === "completed") {
+        const completedTodos = await Todos.find({ completed: true });
+        return res.status(200).json(completedTodos);
+      }
+      const allTodos = await Todos.find({});
+      return res.status(200).json(allTodos);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+};
+
+export { addTodo, toggleTodoDone, updateTodo, deleteTodo, filterTodos };

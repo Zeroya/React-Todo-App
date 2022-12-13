@@ -1,12 +1,14 @@
 import express from "express";
-import { authLogin, isLoggedIn, logout } from "../controllers/authController.js";
+import { authLogin, isLoggedIn, tokenRefresh, logout } from "../controllers/authController.js";
 
 const router = express.Router();
 
 router.post("/login", authLogin);
 
+router.get("/logout", logout);
+
 router.get("/loggedIn", isLoggedIn);
 
-router.get("/logout", logout);
+router.get("/token", tokenRefresh);
 
 export default router;

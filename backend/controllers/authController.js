@@ -1,6 +1,10 @@
 import Users from "../models/userModal.js";
-import bcrypt from "bcryptjs";
+// import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
+let refreshTokens = [];
+const accessTokenLifetime = 10 * 10 * 100;
+const refreshTokenLifetime = 60 * 60 * 24 * 1000;
 
 const authLogin = async (req, res) => {
   try {
@@ -21,14 +25,29 @@ const authLogin = async (req, res) => {
       expiresIn: "10s",
     });
 
+    const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, {
+      expiresIn: "1d",
+    });
+
     res.cookie("jwt", token, {
+      maxAge: accessTokenLifetime,
       httpOnly: true,
       secure: true,
       sameSite: "none",
     });
 
+    res.cookie("refresh", refreshToken, {
+      maxAge: refreshTokenLifetime,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    refreshTokens.push(refreshToken);
+
     return res.status(201).json({
       token,
+      refreshToken,
       user: {
         userId: user._id,
         userName: user.userName,
@@ -39,20 +58,45 @@ const authLogin = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {
-  const cookies = req.cookies;
-  if (!cookies?.jwt) return res.sendStatus(204);
-  res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "none" });
-  res.json({ message: "Cookie cleared" });
+const tokenRefresh = (req, res) => {
+  const refreshToken = req.cookies.refresh;
+
+  if (!refreshToken) {
+    return res.status(401).json(false);
+  }
+
+  if (!refreshTokens.includes(refreshToken)) {
+    return res.status(403).json("Refresh token is not valid!");
+  }
+
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    err && console.log(err);
+    const { userId } = user;
+
+    const token = jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "10s",
+    });
+
+    res.cookie("jwt", token, {
+      maxAge: accessTokenLifetime,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    return res.json({ token });
+  });
 };
 
 const isLoggedIn = async (req, res) => {
   const token = req.cookies.jwt;
+
   if (!token) {
     return res.status(401).json(false);
   }
   return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
     if (err) {
+      res.clearCookie("jwt");
       return res.status(401).json(false);
     } else {
       return res.status(200).json(true);
@@ -60,4 +104,11 @@ const isLoggedIn = async (req, res) => {
   });
 };
 
-export { authLogin, isLoggedIn, logout };
+const logout = (req, res) => {
+  const refreshToken = req.cookies.refresh;
+  res.clearCookie("refresh", { httpOnly: false, secure: true, sameSite: "none" });
+  refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+  res.sendStatus(204);
+};
+
+export { authLogin, isLoggedIn, tokenRefresh, logout };

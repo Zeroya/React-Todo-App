@@ -5,35 +5,37 @@ import { removejwtToken, addjwtFlag } from "../store/reducers/UserSlice";
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
   const [userId, setUserId] = useState("");
   const [isReady, setIsReady] = useState(false);
 
-  const login = useCallback((jwtToken: any, id: string) => {
+  const login = useCallback((jwtToken: string, refreshToken: string, id: string) => {
     setToken(jwtToken);
     setUserId(id);
+    dispatch(addjwtFlag(true));
     localStorage.setItem(
       "userData",
       JSON.stringify({
         userId: id,
         token: jwtToken,
+        refreshToken: refreshToken,
       })
     );
   }, []);
 
   const logout = async () => {
+    await isLogout();
     setToken(null);
     setUserId("");
     localStorage.removeItem("userData");
     dispatch(removejwtToken());
     dispatch(addjwtFlag(false));
-    await isLogout();
   };
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userData") || "{}");
     if (data && data.token) {
-      login(data.token, data.userId);
+      login(data.token, data.refreshToken, data.userId);
     }
     setIsReady(true);
   }, [login]);
