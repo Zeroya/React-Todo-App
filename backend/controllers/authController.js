@@ -1,10 +1,34 @@
 import Users from "../models/userModal.js";
-// import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 let refreshTokens = [];
 const accessTokenLifetime = 10 * 10 * 100;
 const refreshTokenLifetime = 60 * 60 * 24 * 1000;
+
+const authRegister = async (req, res) => {
+  try {
+    const { userName, password } = req.body;
+    if (!userName || !password) {
+      return res.status(400).json({ msg: "Not all fields have been entered." });
+    }
+
+    const isUsed = await Users.findOne({ userName: req.body.userName });
+
+    if (isUsed) {
+      return res.status(300).json({ msg: "This account already exist." });
+    }
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 12);
+
+    const user = new Users({ userName, password: hashedPassword });
+    await user.save();
+
+    return res.status(201).json({ msg: "New user registered." });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
 const authLogin = async (req, res) => {
   try {
@@ -12,12 +36,14 @@ const authLogin = async (req, res) => {
     if (!userName || !password) {
       return res.status(400).json({ msg: "Not all fields have been entered." });
     }
-    const user = await Users.findOne({ userName: req.body.userName });
+    const user = await Users.findOne({ userName });
     if (!user) {
       return res.status(400).json({ msg: "No account with this userName has been registered." });
     }
-    // const isMatch = await bcrypt.compare(password, user.password);
-    if (password !== user.password) {
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
       return res.status(400).json({ msg: "Invalid password." });
     }
 
@@ -111,4 +137,4 @@ const logout = (req, res) => {
   res.sendStatus(204);
 };
 
-export { authLogin, isLoggedIn, tokenRefresh, logout };
+export { authLogin, authRegister, isLoggedIn, tokenRefresh, logout };

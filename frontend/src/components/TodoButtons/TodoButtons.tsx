@@ -20,9 +20,9 @@ const TodoButtons = () => {
     }
   };
 
-  const filterTodosDB = async (param: string) => {
+  const filterTodosDB = async (param: string, userId: string) => {
     try {
-      const response = await filterAllTodos(param);
+      const response = await filterAllTodos(param, userId);
       return dispatch(addMongoTodos(fechedAllTodo(response.data)));
     } catch (error) {
       console.error(error);
@@ -30,12 +30,13 @@ const TodoButtons = () => {
   };
 
   const handleClick = async (fieldName: string, strNum?: number) => {
+    const userData = JSON.parse(localStorage.getItem("userData") || "{}");
     setClick(click.map((el, i, arr) => (i === strNum ? !el : false)));
     typeof strNum !== "number" &&
       (await deleteTodosDB()) &&
       dispatch(checker()) &&
       setClick(click.map((_, i) => i === 0));
-    fieldName && typeof strNum === "number" && (await filterTodosDB(fieldName));
+    fieldName && typeof strNum === "number" && (await filterTodosDB(fieldName, userData.userId));
     dispatch(filterTodos(fieldName));
   };
 

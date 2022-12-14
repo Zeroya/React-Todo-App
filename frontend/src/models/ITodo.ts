@@ -40,6 +40,7 @@ export interface IMongoTodo {
   _id?: string;
   idd?: string;
   message: string;
+  userId?: string;
   date: string;
   dateExpiration: string;
   completed?: boolean;

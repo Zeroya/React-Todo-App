@@ -2,9 +2,10 @@ import Todos from "../models/todoModal.js";
 
 const addTodo = async (req, res) => {
   try {
-    const { message, date, dateExpiration } = req.body;
+    const { message, date, dateExpiration, userId } = req.body;
 
     const todo = await new Todos({
+      owner: userId,
       message,
       date,
       dateExpiration,
@@ -77,17 +78,18 @@ const deleteTodo = async (req, res) => {
 
 const filterTodos = async (req, res) => {
   let param = req.params.param;
+  const { userId } = req.query;
   if (param) {
     try {
       if (param === "active") {
-        const activeTodos = await Todos.find({ completed: false });
+        const activeTodos = await Todos.find({ owner: userId, completed: false });
         return res.status(200).json(activeTodos);
       }
       if (param === "completed") {
-        const completedTodos = await Todos.find({ completed: true });
+        const completedTodos = await Todos.find({ owner: userId, completed: true });
         return res.status(200).json(completedTodos);
       }
-      const allTodos = await Todos.find({});
+      const allTodos = await Todos.find({ owner: userId });
       return res.status(200).json(allTodos);
     } catch (error) {
       res.status(500).json(error);
