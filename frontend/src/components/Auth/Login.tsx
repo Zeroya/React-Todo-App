@@ -2,7 +2,7 @@ import React, { FC, useState, ChangeEvent, MouseEvent, useEffect } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { addjwtToken } from "../../store/reducers/UserSlice";
 import { loginUser } from "../../api/todoApi";
-import { IUser } from "../../models/ITodo";
+import { ILogedUser, IUser } from "../../models/ITodo";
 import Alert from "./Alert";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
@@ -22,8 +22,8 @@ const Login: FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const getToken = (token: string, refreshToken: string, userId: string): void => {
-    login(token, refreshToken, userId);
+  const getToken = (token: string, refreshToken: string, user: ILogedUser): void => {
+    login(token, refreshToken, user);
     dispatch(addjwtToken(token));
   };
 
@@ -34,15 +34,7 @@ const Login: FC = () => {
         return;
       }
       setChecker(true);
-      await loginUser(form).then(
-        ({
-          data: {
-            token,
-            refreshToken,
-            user: { userId },
-          },
-        }) => getToken(token, refreshToken, userId)
-      );
+      await loginUser(form).then(({ data: { token, refreshToken, user } }) => getToken(token, refreshToken, user));
       setChecker(false);
     } catch (error) {
       setChecker(false);

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { BASE_URL, HEADERS, CREDENTIALS } from "../constants/constants";
 import { isLogout, tokenRefresh } from "../api/todoApi";
-import jwt_decode from "jwt-decode";
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -44,6 +43,7 @@ instance.interceptors.response.use(
           "userData",
           JSON.stringify({
             userId: userData.userId,
+            userName: userData.userName,
             ...rs.data,
             refreshToken: userData.refreshToken,
           })

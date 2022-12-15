@@ -36,6 +36,11 @@ export interface IUser {
   password: string;
 }
 
+export interface ILogedUser {
+  userId: string;
+  userName: string;
+}
+
 export interface IMongoTodo {
   _id?: string;
   idd?: string;
