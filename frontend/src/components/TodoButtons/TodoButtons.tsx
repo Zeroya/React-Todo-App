@@ -7,10 +7,12 @@ import s from "./TodoButtons.module.scss";
 import { fechedAllTodo } from "../../utils/mongoHelper";
 
 const TodoButtons = () => {
+  const checkedTodos = useAppSelector((state) => state.todos.todos);
   const checkerValue = useAppSelector((state) => state.todos.checker);
   const [click, setClick] = useState<Array<boolean>>([false, false, false]);
 
   const dispatch = useAppDispatch();
+  const completedTodos = checkedTodos.filter((el) => el.completed === true);
 
   const deleteTodosDB = async () => {
     try {
@@ -31,10 +33,11 @@ const TodoButtons = () => {
 
   const handleClick = async (fieldName: string, strNum?: number) => {
     const userData = JSON.parse(localStorage.getItem("userData") || "{}");
-    setClick(click.map((el, i, arr) => (i === strNum ? !el : false)));
+    typeof strNum === "number" && setClick(click.map((el, i) => (i === strNum ? !el : false)));
     typeof strNum !== "number" &&
-      (await deleteTodosDB()) &&
+      !!completedTodos.length &&
       dispatch(checker()) &&
+      (await deleteTodosDB()) &&
       setClick(click.map((_, i) => i === 0));
     fieldName && typeof strNum === "number" && (await filterTodosDB(fieldName, userData.userId));
     dispatch(filterTodos(fieldName));

@@ -64,8 +64,9 @@ const updateTodo = async (req, res) => {
 
 const deleteTodo = async (req, res) => {
   try {
+    const userId = req.user.userId;
     if (!req.params.id) {
-      const todos = await Todos.find({ completed: true }).deleteMany();
+      const todos = await Todos.find({ owner: userId, completed: true }).deleteMany();
       return res.status(200).json(todos);
     }
 

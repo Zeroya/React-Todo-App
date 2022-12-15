@@ -40,6 +40,9 @@ export const counterSlice = createSlice({
     deleteTodo: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.filter((todo) => todo._id !== action.payload);
     },
+    deleteAllTodos: (state) => {
+      state.todos = [];
+    },
     updateTodo: (state, action: PayloadAction<TodoData>) => {
       const { message, date, expDate } = action.payload;
       state.todos = state.todos.map((todo) =>
@@ -95,6 +98,7 @@ export const counterSlice = createSlice({
 export const {
   completeTodo,
   deleteTodo,
+  deleteAllTodos,
   updateTodo,
   filterTodos,
   checker,

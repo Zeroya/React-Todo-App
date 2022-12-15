@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { isLogout } from "../api/todoApi";
 import { useAppDispatch } from "../hooks/hooks";
-import { removejwtToken, addjwtFlag } from "../store/reducers/UserSlice";
+import { removejwtToken, addjwtFlag, deleteAllTodos } from "../store/reducers/UserSlice";
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +29,7 @@ export const useAuth = () => {
     setUserId("");
     localStorage.removeItem("userData");
     dispatch(removejwtToken());
+    dispatch(deleteAllTodos());
     dispatch(addjwtFlag(false));
   };
 
