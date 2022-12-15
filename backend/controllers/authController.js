@@ -3,8 +3,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 let refreshTokens = [];
-const accessTokenLifetime = 10 * 10 * 100;
-const refreshTokenLifetime = 60 * 60 * 24 * 1000;
+const accessTokenLifetime = 15 * 60 * 1000;
+const refreshTokenLifetime = 30 * 24 * 60 * 60 * 1000;
 
 const authRegister = async (req, res) => {
   try {
@@ -48,11 +48,11 @@ const authLogin = async (req, res) => {
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "10s",
+      expiresIn: "15m",
     });
 
     const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "30d",
     });
 
     res.cookie("jwt", token, {
@@ -100,7 +100,7 @@ const tokenRefresh = (req, res) => {
     const { userId } = user;
 
     const token = jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "10s",
+      expiresIn: "15m",
     });
 
     res.cookie("jwt", token, {
