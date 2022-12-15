@@ -1,4 +1,13 @@
-import React, { FC, useState, useLayoutEffect, FormEvent, ChangeEvent } from "react";
+import React, {
+  FC,
+  useState,
+  useLayoutEffect,
+  FormEvent,
+  ChangeEvent,
+  KeyboardEvent,
+  useRef,
+  MutableRefObject,
+} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -50,9 +59,10 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
 
     if (!message || message === "") newErrors.message = "cannot be blank!";
     else if (message.length > 30) newErrors.message = "message is too long!";
-
-    if (!date || date === "") newErrors.date = "please, add date";
+    if (!date || date === "") newErrors.date = "please, add creation date";
     if (!expDate || expDate === "") newErrors.expDate = "please, add expiration date";
+    else if (date && expDate && new Date(date).getTime() > new Date(expDate).getTime())
+      newErrors.expDate = "expiration date must be later than creation date";
 
     return newErrors;
   };
@@ -104,7 +114,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
 
   return (
     <>
-      <Form>
+      <form onKeyDown={(e: any) => (e.key === "Enter" ? handleSubmit(e) : "")}>
         <span onClick={handleShow}>
           <i
             className={`fa ${type ? `${s.pencilSymbol} fa-pencil` : `${s.plusSymbol} fa-plus`}`}
@@ -131,20 +141,23 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
               />
               <Form.Control.Feedback type="invalid">{errors.message}</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="validationCustom02">
-              <div style={{ margin: "0.5em 0 0.5em" }}>
+            <div style={{ margin: "0.5em 0 0.5em" }}>
+              <Form.Group controlId="validationCustom02">
                 <Form.Label>Creation date</Form.Label>
                 <Form.Control
                   required
                   className={s.formControl}
                   type="datetime-local"
                   value={input.date}
+                  max="9999-12-31T23:59"
+                  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                   onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, "date")}
                   isInvalid={!!errors.date}
                 />
-              </div>
-              <Form.Control.Feedback type="invalid">{errors.date}</Form.Control.Feedback>
-            </Form.Group>
+
+                <Form.Control.Feedback type="invalid">{errors.date}</Form.Control.Feedback>
+              </Form.Group>
+            </div>
             <Form.Group controlId="validationCustom02">
               <Form.Label>Expiration date</Form.Label>
               <Form.Control
@@ -153,6 +166,8 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
                 type="datetime-local"
                 value={input.expDate}
                 min={input.date}
+                max="9999-12-31T23:59"
+                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                 onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, "expDate")}
                 isInvalid={!!errors.expDate}
               />
@@ -168,7 +183,7 @@ const ModalWindow: FC<IChange> = ({ type, message, date, expDate, idd }) => {
             </Button>
           </Modal.Footer>
         </Modal>
-      </Form>
+      </form>
     </>
   );
 };
