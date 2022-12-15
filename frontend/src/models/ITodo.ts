@@ -14,7 +14,7 @@ export interface TodoData {
   message: string;
   date: string;
   expDate: string;
-  idd: string;
+  idd?: string;
 }
 
 export interface UserDate {
