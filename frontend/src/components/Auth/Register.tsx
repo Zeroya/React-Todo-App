@@ -9,6 +9,7 @@ import s from "./Auth.module.scss";
 const Register: FC = () => {
   let navigate = useNavigate();
   const [errorArr, setErrorArr] = useState<any>(null);
+  const [loginMsg, setLoginMsg] = useState("");
   const [form, setForm] = useState<IUser>({
     userName: "",
     password: "",
@@ -19,6 +20,11 @@ const Register: FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const userAuthTransit = (msg: string) => {
+    setLoginMsg(msg);
+    setTimeout(() => navigate("/login"), 2000);
+  };
+
   const registerHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
@@ -26,7 +32,7 @@ const Register: FC = () => {
         return;
       }
       setChecker(true);
-      await registerUser(form).then(() => navigate("/login"));
+      await registerUser(form).then((res) => userAuthTransit(res?.data?.msg));
       setChecker(false);
     } catch (error) {
       setChecker(false);
@@ -43,9 +49,14 @@ const Register: FC = () => {
     setTimeout(() => setErrorArr(null), 2000);
   }, [errorArr]);
 
+  useEffect(() => {
+    setTimeout(() => setLoginMsg(""), 2000);
+  }, [loginMsg]);
+
   return (
     <>
       {errorArr && <Alert msg={errorArr.response.data.msg} />}
+      {loginMsg && <Alert msg={loginMsg} />}
       <div className="form-bg">
         <div className="container">
           <div className="row">

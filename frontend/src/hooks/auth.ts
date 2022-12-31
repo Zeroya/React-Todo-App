@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { isLogout } from "../api/todoApi";
 import { useAppDispatch } from "../hooks/hooks";
-import { removejwtToken, addjwtFlag } from "../store/reducers/UserSlice";
+import { ILogedUser } from "../models/ITodo";
+import { removejwtToken, addjwtFlag, deleteAllTodos } from "../store/reducers/UserSlice";
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
@@ -9,14 +10,15 @@ export const useAuth = () => {
   const [userId, setUserId] = useState("");
   const [isReady, setIsReady] = useState(false);
 
-  const login = useCallback((jwtToken: string, refreshToken: string, id: string) => {
+  const login = useCallback((jwtToken: string, refreshToken: string, user: ILogedUser) => {
     setToken(jwtToken);
-    setUserId(id);
+    setUserId(user.userId);
     dispatch(addjwtFlag(true));
     localStorage.setItem(
       "userData",
       JSON.stringify({
-        userId: id,
+        userId: user.userId,
+        userName: user.userName,
         token: jwtToken,
         refreshToken: refreshToken,
       })
@@ -29,13 +31,14 @@ export const useAuth = () => {
     setUserId("");
     localStorage.removeItem("userData");
     dispatch(removejwtToken());
+    dispatch(deleteAllTodos());
     dispatch(addjwtFlag(false));
   };
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userData") || "{}");
     if (data && data.token) {
-      login(data.token, data.refreshToken, data.userId);
+      login(data.token, data.refreshToken, { userId: data.userId, userName: data.userName });
     }
     setIsReady(true);
   }, [login]);

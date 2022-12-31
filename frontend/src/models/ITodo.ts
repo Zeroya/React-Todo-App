@@ -14,7 +14,7 @@ export interface TodoData {
   message: string;
   date: string;
   expDate: string;
-  idd: string;
+  idd?: string;
 }
 
 export interface UserDate {
@@ -34,6 +34,11 @@ export interface IChange {
 export interface IUser {
   userName: string;
   password: string;
+}
+
+export interface ILogedUser {
+  userId: string;
+  userName: string;
 }
 
 export interface IMongoTodo {
